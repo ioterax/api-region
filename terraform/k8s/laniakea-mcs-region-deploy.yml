@@ -1,0 +1,22 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mcs-region-deplyoment
+  namespace: laniakea-central
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mcs-central
+  template:
+    metadata:
+      labels: 
+        app: mcs-central
+    spec:
+      containers:
+      - name: mcs-region
+        image: atisiothing/laniakea-mcs-region:latest
+        imagePullPolicy: Never # use localhost image for dev purposes
+        ports:
+          - containerPort: 3000
