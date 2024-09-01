@@ -37,3 +37,4 @@ lerna-debug.log*
 
 # Terraform
 /terraform/.terraform*
+/terraform/terraform.tfstate*
