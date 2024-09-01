@@ -1,9 +1,8 @@
-import { State } from "@/modules/schemas/state.schema";
-import { IState } from "@atisiothings/laniakea-lib-central/dist/domain/region";
+import { State } from "@/framework/repository/schemas/state.schema";
 
 export interface StateUseCase {
 
-  create(state: IState): Promise<State>;
+  create(state: State): Promise<State>;
 
   delete(id: string);
 

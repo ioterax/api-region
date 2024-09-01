@@ -1,14 +1,16 @@
-import { Country } from "@/modules/schemas/country.schema";
+import { Country } from "@/framework/repository/schemas/country.schema";
 
 export interface CountryUseCase {
 
-  create(country: Country): Promise<Country>;
+  registerNew(country: Country): Promise<Country>;
 
-  delete(id: string);
+  retrieveAll(): Promise<Country[]>;
 
-  findAll(): Promise<Country[]>;
+  retrieveOne(id: string): Promise<Country | null>;
 
-  findOne(id: String): Promise<Country>;
+  updateOne(id: string, country: Country): Promise<Country | null>;
+  
+  removeOne(id: string);
 
 }
 

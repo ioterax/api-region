@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
-import { StateController } from '../adapters/inbound/controller/state.controller';
+import { StateController } from '../framework/controller/state.controller';
 import { StateService } from '@/application/services/state.service';
 import { StateUseCase } from '@/application/usescases/state.usecase';
-import { State, StateSchema } from './schemas/state.schema';
+import { State, StateSchema } from '../framework/repository/schemas/state.schema';
 
 @Module({
   imports: [

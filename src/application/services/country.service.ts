@@ -1,29 +1,38 @@
-import { Injectable } from '@nestjs/common';
-import { Model } from 'mongoose';
-import { CountryUseCase } from '../usescases/country.usecase';
-import { InjectModel } from '@nestjs/mongoose';
-import { Country } from '@/modules/schemas/country.schema';
-import { ICountry } from '@atisiothings/laniakea-lib-central/dist/domain/region';
+import { Inject, Injectable } from '@nestjs/common';
+
+import { CountryUseCase } from '@/application/usescases/country.usecase';
+import { CountryOutPort } from '@/application/ports/out/country.out.port';
+import { Country } from '@/framework/repository/schemas/country.schema';
 
 @Injectable()
 export class CountryService implements CountryUseCase {
 
-  constructor(@InjectModel(Country.name) private countryModel: Model<Country>) {}
+  constructor(@Inject(CountryOutPort) private readonly countryOutPort: CountryOutPort) {}
 
-  async create(country: ICountry): Promise<Country> {    
-    const countryModel = new this.countryModel(country);
-    return countryModel.save();
+  registerNew(country: Country): Promise<Country> {
+    // add validation
+    return this.countryOutPort.save(country);
   }
 
-  delete(id: string) {
-    throw new Error('Method not implemented.');
+  retrieveAll(): Promise<Country[]> {
+    return this.countryOutPort.findAll();
+  }
+  
+  retrieveOne(id: string): Promise<Country | null> {
+      return this.countryOutPort.findById(id);
   }
 
-  findAll(): Promise<Country[]> {
-      return this.countryModel.find().exec();
-  }
-  findOne(id: String): Promise<Country> {
-      throw new Error('Method not implemented.');
+  updateOne(id: string, country: Country): Promise<Country | null> {
+    return this.countryOutPort.updateById(id, country);
   }
 
+  removeOne(id: string) {
+    this.countryOutPort.deleteById(id);
+  }
 }
+
+
+// https://github.com/ThomasOliver545/Blog-with-NestJS-and-Angular/blob/master/api/src/blog/service/blog.service.ts
+// 1. https://docs.nestjs.com/guards
+// 2. https://docs.nestjs.com/security/authentication
+// 3. https://docs.nestjs.com/security/authorization
