@@ -7,7 +7,15 @@ import { AppModule } from '@/app.module';
 
 // const app = async () => await NestFactory.create(AppModule);
 
+const banner = `
+██████  ███████  ██████  ██  ██████  ███    ██      █████  ██████  ██ 
+██   ██ ██      ██       ██ ██    ██ ████   ██     ██   ██ ██   ██ ██ 
+██████  █████   ██   ███ ██ ██    ██ ██ ██  ██     ███████ ██████  ██ 
+██   ██ ██      ██    ██ ██ ██    ██ ██  ██ ██     ██   ██ ██      ██ 
+██   ██ ███████  ██████  ██  ██████  ██   ████     ██   ██ ██      ██ 
+`;
 
+console.log(banner);
 
 
 async function bootstrap() {

@@ -3,6 +3,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { StateUseCase } from '../usescases/state.usecase';
 import { StateOutPort } from '../ports/out/state.out.port';
 import { State } from '@/framework/repository/schemas/state.schema';
+import { DomainInvalidException } from '@/exceptions/domain.exception';
 
 @Injectable()
 export class StateService implements StateUseCase {
@@ -14,7 +15,8 @@ export class StateService implements StateUseCase {
   }
 
   retrieveAll(): Promise<State[]> {
-    return this.stateOutPort.findAll();
+    throw new DomainInvalidException('DOMAIN NOT IMPLEMENTED');
+    // return this.stateOutPort.findAll();
   }
 
   retrieveOne(id: String): Promise<State | null> {

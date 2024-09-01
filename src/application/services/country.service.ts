@@ -30,9 +30,3 @@ export class CountryService implements CountryUseCase {
     this.countryOutPort.deleteById(id);
   }
 }
-
-
-// https://github.com/ThomasOliver545/Blog-with-NestJS-and-Angular/blob/master/api/src/blog/service/blog.service.ts
-// 1. https://docs.nestjs.com/guards
-// 2. https://docs.nestjs.com/security/authentication
-// 3. https://docs.nestjs.com/security/authorization
