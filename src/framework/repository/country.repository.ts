@@ -7,28 +7,28 @@ import { setTrace } from '@/common/common';
 
 export class CountryRepository implements CountryOutPort {
 
-    constructor(@InjectModel(Country.name) private countryModel: Model<Country>) {}
+    constructor(@InjectModel(Country.name) private domainModel: Model<Country>) {}
 
-    async save(country: Country): Promise<Country> {
-        const e = setTrace(country, true);
+    async save(domain: Country): Promise<Country> {
+        const e = setTrace(domain, true);
         console.log(e);
     
-        const countryModel = new this.countryModel(e);
-        const r = await countryModel.save();
+        const domainModel = new this.domainModel(e);
+        const r = await domainModel.save();
         console.log(r);
         return r;    
     }
 
     findAll(): Promise<Country[]> {
-        return this.countryModel.find().exec();
+        return this.domainModel.find().exec();
     }
 
     findById(id: string): Promise<Country | null> {
-        return this.countryModel.findById(id).exec();
+        return this.domainModel.findById(id).exec();
     }
 
-    async updateById(id: string, country: Country): Promise<Country | null> {
-        const e = setTrace(country);
+    async updateById(id: string, domain: Country): Promise<Country | null> {
+        const e = setTrace(domain);
         // console.log(e);
     
         const filter  = { _id: id };
@@ -36,17 +36,17 @@ export class CountryRepository implements CountryOutPort {
         // console.log(filter);
         // console.log({...country});
     
-        const countryModel = new this.countryModel(e);
-        // console.log(countryModel);
+        const domainModel = new this.domainModel(e);
+        // console.log(domainModel);
     
-        const x = await this.countryModel.findByIdAndUpdate(filter, {...country}, {new: true}).exec();
+        const x = await this.domainModel.findByIdAndUpdate(filter, {...domain}, {new: true}).exec();
         console.log(x);
         return x;
     
     }
     async deleteById(id: string) {
         const filter  = { _id: id };
-        await this.countryModel.findByIdAndDelete(filter)
+        await this.domainModel.findByIdAndDelete(filter)
 
     }
     

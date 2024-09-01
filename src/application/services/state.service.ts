@@ -1,39 +1,32 @@
-import { Injectable } from '@nestjs/common';
-import { Model } from 'mongoose';
+import { Inject, Injectable } from '@nestjs/common';
+
 import { StateUseCase } from '../usescases/state.usecase';
-import { InjectModel } from '@nestjs/mongoose';
+import { StateOutPort } from '../ports/out/state.out.port';
 import { State } from '@/framework/repository/schemas/state.schema';
 
 @Injectable()
 export class StateService implements StateUseCase {
 
-  constructor(@InjectModel(State.name) private stateModel: Model<State>) {}
-  
-  async create(state: State): Promise<State> {
-    const stateModel = new this.stateModel(state);
-    return stateModel.save();
-  }
-  
-  delete(id: string) {
-    throw new Error('Method not implemented.');
-  }
-  
-  async findAll(): Promise<State[]> {
-    console.log('getState');
-    return this.stateModel.aggregate([
-      { $lookup:
-        {
-          from: 'countries',
-          localField: 'country',
-          foreignField: '_id',
-          as: 'country'
-        } },
-        { $unwind: "$country" }
-   ]).exec();
+  constructor(@Inject(StateOutPort) private readonly stateOutPort: StateOutPort) {}
+
+  registerNew(domain: State): Promise<State> {
+    return this.stateOutPort.save(domain);
   }
 
-  findOne(id: String): Promise<State> {
-    throw new Error('Method not implemented.');
+  retrieveAll(): Promise<State[]> {
+    return this.stateOutPort.findAll();
+  }
+
+  retrieveOne(id: String): Promise<State | null> {
+    return this.stateOutPort.findById(id);
+  }
+
+  updateOne(id: String, domain: State): Promise<State | null> {
+    return this.stateOutPort.updateById(id, domain);
+  }
+
+  removeOne(id: String) {
+    return this.stateOutPort.deleteById(id);
   }
 
 }

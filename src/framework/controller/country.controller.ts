@@ -21,17 +21,17 @@ export class CountryController {
   }
 
   @Get(':id')
-  get(@Param('id') id: string): Promise<Country | null> {
+  get(@Param('id') id: String): Promise<Country | null> {
     return this.countryInPort.handleFindOne(id);
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() country: Country) {
+  update(@Param('id') id: String, @Body() country: Country) {
     return this.countryInPort.handleUpdateOne(id, country);
   }
 
   @Delete(':id')
-  delete(@Param('id') id: string) {
+  delete(@Param('id') id: String) {
     console.log(`id: ${id}`)
       this.countryInPort.handleRemoveOne(id);
   }

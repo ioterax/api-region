@@ -1,15 +1,6 @@
 import { State } from "@/framework/repository/schemas/state.schema";
+import { CrudUseCase } from "./crud.usecase";
 
-export interface StateUseCase {
-
-  create(state: State): Promise<State>;
-
-  delete(id: string);
-
-  findAll(): Promise<State[]>;
-
-  findOne(id: String): Promise<State>;
-
-}
+export interface StateUseCase extends CrudUseCase<State, String> {}
 
 export const StateUseCase = Symbol('StateUseCase');

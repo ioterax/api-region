@@ -14,9 +14,8 @@ import { CountryOutPort } from '@/application/ports/out/country.out.port';
 
 // Framework
 import { CountryController } from '@/framework/controller/country.controller';
-import { CountryRepository } from '@/framework/repository/country.repository';
-
 import { Country, CountrySchema } from '../framework/repository/schemas/country.schema';
+import { CountryRepository } from '@/framework/repository/country.repository';
 
 @Module({
   imports: [

@@ -18,15 +18,15 @@ export class CountryRestAdapter implements CountryInPort {
       return this.countryUseCase.retrieveAll();
     }
 
-    handleFindOne(id: string): Promise<Country | null> {
+    handleFindOne(id: String): Promise<Country | null> {
       return this.countryUseCase.retrieveOne(id);
     }
   
-    handleUpdateOne(id: string, country: Country) {
+    handleUpdateOne(id: String, country: Country) {
       return this.countryUseCase.updateOne(id, country);
     }
   
-    handleRemoveOne(id: string) {
+    handleRemoveOne(id: String) {
       console.log(`id: ${id}`)
         this.countryUseCase.removeOne(id);
     }

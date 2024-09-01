@@ -18,15 +18,15 @@ export class CountryService implements CountryUseCase {
     return this.countryOutPort.findAll();
   }
   
-  retrieveOne(id: string): Promise<Country | null> {
+  retrieveOne(id: String): Promise<Country | null> {
       return this.countryOutPort.findById(id);
   }
 
-  updateOne(id: string, country: Country): Promise<Country | null> {
+  updateOne(id: String, country: Country): Promise<Country | null> {
     return this.countryOutPort.updateById(id, country);
   }
 
-  removeOne(id: string) {
+  removeOne(id: String) {
     this.countryOutPort.deleteById(id);
   }
 }
