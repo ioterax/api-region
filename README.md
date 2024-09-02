@@ -10,6 +10,7 @@
 
 </pre>
 
+<!---
 LOG
 https://levelup.gitconnected.com/error-handling-and-logging-in-nestjs-best-practices-ecc871ade7d7
 
