@@ -5,7 +5,7 @@ import { CountryOutPort } from "@/application/ports/out/country.out.port";
 import { Country } from "@/framework/repository/mongodb/schemas/country.schema";
 import { setTrace } from '@/common/common';
 
-export class CountryRepository implements CountryOutPort {
+export class CountryMongoDbRepository implements CountryOutPort {
 
     constructor(@InjectModel(Country.name) private domainModel: Model<Country>) {}
 

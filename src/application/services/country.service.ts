@@ -3,11 +3,12 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ICountry } from '@atisiothings/laniakea-lib-central/dist/domain/region';
 import { CountryCrudUseCase, CountryViewUseCase } from '@/application/usescases/country.usecase';
 import { CountryOutPort } from '@/application/ports/out/country.out.port';
+import { PORT_OUT } from '@/config/ports.config';
 
 @Injectable()
 export class CountryService implements CountryCrudUseCase {
 
-  constructor(@Inject(CountryOutPort) private readonly countryOutPort: CountryOutPort) {}
+  constructor(@Inject(PORT_OUT.DB.MONGODB) private readonly countryOutPort: CountryOutPort) {}
 
   registerNew(country: ICountry): Promise<ICountry> {
     // add validation
