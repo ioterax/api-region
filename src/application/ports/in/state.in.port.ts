@@ -1,5 +1,5 @@
 
-import { State } from "@/framework/repository/schemas/state.schema";
+import { State } from "@/framework/repository/mongodb/schemas/state.schema";
 import { CrudInPort } from "./crud.in.port";
 
 export interface StateInPort extends CrudInPort<State, String> {}

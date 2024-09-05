@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Inject, Param, Post, Put } from '@nestjs/common';
-import { State } from '@/framework/repository/schemas/state.schema';
+import { State } from '@/framework/repository/mongodb/schemas/state.schema';
 import { ApiTags } from '@nestjs/swagger';
 import { StateInPort } from '@/application/ports/in/state.in.port';
 

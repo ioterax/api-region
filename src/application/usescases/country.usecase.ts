@@ -1,6 +1,9 @@
-import { Country } from "@/framework/repository/schemas/country.schema";
-import { CrudUseCase } from "./crud.usecase";
+import { ICountry } from "@atisiothings/laniakea-lib-central/dist/domain/region";
+import { CrudUseCase } from "./core/crud.usecase";
+import { ViewUseCase } from "./core/view.usecase";
 
-export interface CountryUseCase extends CrudUseCase<Country, String> {}
+export interface CountryCrudUseCase extends CrudUseCase<ICountry, String> {}
+export const CountryCrudUseCase = Symbol('CountryCrudUseCase');
 
-export const CountryUseCase = Symbol('CountryUseCase');
+export interface CountryViewUseCase extends ViewUseCase<ICountry, String> {}
+export const CountryViewUseCase = Symbol('CountryViewUseCase');

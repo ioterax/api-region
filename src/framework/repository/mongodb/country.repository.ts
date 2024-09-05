@@ -2,7 +2,7 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 
 import { CountryOutPort } from "@/application/ports/out/country.out.port";
-import { Country } from "@/framework/repository/schemas/country.schema";
+import { Country } from "@/framework/repository/mongodb/schemas/country.schema";
 import { setTrace } from '@/common/common';
 
 export class CountryRepository implements CountryOutPort {
@@ -19,12 +19,12 @@ export class CountryRepository implements CountryOutPort {
         return r;    
     }
 
-    findAll(): Promise<Country[]> {
-        return this.domainModel.find().exec();
+    findAll(project: Country | {}): Promise<Country[]> {
+        return this.domainModel.find({}, project).exec();
     }
 
-    findById(id: string): Promise<Country | null> {
-        return this.domainModel.findById(id).exec();
+    findById(id: string, project: Country | {}): Promise<Country | null> {
+        return this.domainModel.findById(id, project).exec();
     }
 
     async updateById(id: string, domain: Country): Promise<Country | null> {

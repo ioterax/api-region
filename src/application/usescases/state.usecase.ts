@@ -1,5 +1,5 @@
-import { State } from "@/framework/repository/schemas/state.schema";
-import { CrudUseCase } from "./crud.usecase";
+import { State } from "@/framework/repository/mongodb/schemas/state.schema";
+import { CrudUseCase } from "./core/crud.usecase";
 
 export interface StateUseCase extends CrudUseCase<State, String> {}
 

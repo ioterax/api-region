@@ -1,6 +1,5 @@
-import { Country } from "@/framework/repository/schemas/country.schema";
-import { CrudOutPort } from "./crud.out.port";
+import { ICountry } from "@atisiothings/laniakea-lib-central/dist/domain/region";
+import { CrudOutPort } from "./core/crud.out.port";
 
-export interface CountryOutPort extends CrudOutPort<Country, String> {}
-
+export interface CountryOutPort extends CrudOutPort<ICountry, String> {}
 export const CountryOutPort = Symbol('CountryOutPort');

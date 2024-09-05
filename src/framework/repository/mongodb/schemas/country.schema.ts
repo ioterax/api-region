@@ -15,8 +15,8 @@ export class Country implements ICountry {
     mcc: number;
     @Prop({ required: true, index: true })
     initials: string;
-    @Prop({ required: true })
-    language: string;
+    // @Prop({ required: true })
+    // language: string;
     @Prop({ required: true, index: true, unique: true })
     createdOn: Date;
     @Prop({ required: true, index: true, unique: true })

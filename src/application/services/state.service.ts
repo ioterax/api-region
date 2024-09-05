@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 
 import { StateUseCase } from '../usescases/state.usecase';
 import { StateOutPort } from '../ports/out/state.out.port';
-import { State } from '@/framework/repository/schemas/state.schema';
+import { State } from '@/framework/repository/mongodb/schemas/state.schema';
 import { DomainInvalidException } from '@/exceptions/domain.exception';
 
 @Injectable()

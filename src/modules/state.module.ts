@@ -14,8 +14,8 @@ import { StateOutPort } from '@/application/ports/out/state.out.port';
 
 // Framework
 import { StateController } from '@/framework/controller/state.controller';
-import { State, StateSchema } from '@/framework/repository/schemas/state.schema';
-import { StateRepository } from '@/framework/repository/state.repository';
+import { State, StateSchema } from '@/framework/repository/mongodb/schemas/state.schema';
+import { StateRepository } from '@/framework/repository/mongodb/state.repository';
 
 @Module({
   imports: [

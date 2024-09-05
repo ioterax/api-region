@@ -1,14 +1,14 @@
-export interface CrudInPort<D, T > {
+export interface CrudInPort<D, T> {
 
-    handleToRegister(domain: D): Promise<D>
+    handleToRegister(domain: D): Promise<D>;
 
-    handleFindAll(): Promise<D[]> 
+    handleFindAll(): Promise<D[]>;
 
-    handleFindOne(id: T): Promise<D | null> 
+    handleFindOne(id: T): Promise<D | null>;
 
-    handleUpdateOne(id: T, domain: D)
+    handleUpdateOne(id: T, domain: D);
 
-    handleRemoveOne(id: T)
+    handleRemoveOne(id: T);
 
 }
 
