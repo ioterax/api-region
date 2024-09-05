@@ -20,7 +20,7 @@ import { AuthGuard } from '@/security/auth.guard';
       username: process.env.POSTGRES_USER || 'postgres',
       password: process.env.POSTGRES_PASSWORD || 'postgres',
       database: process.env.POSTGRES_DB || 'test',
-      entities: [__dirname + '/framework/repository/postgres/entities/**/*.entity{.ts,.js}'], // Apenas entidades relacionadas ao PostgreSQL
+      entities: [__dirname + '/framework/repository/postgres/entities/**/*.entity{.ts,.js}'], // only entities related with PostgreSQL
       synchronize: true,
     }),
     TypeOrmModule.forRoot({
@@ -31,7 +31,7 @@ import { AuthGuard } from '@/security/auth.guard';
       username: process.env.MYSQL_USER || 'root',
       password: process.env.MYSQL_PASSWORD || 'root',
       database: process.env.MYSQL_DB || 'test',
-      entities: [__dirname + '/framework/repository/mysql/entities/**/*.entity{.ts,.js}'], // Apenas entidades relacionadas ao MySQL
+      entities: [__dirname + '/framework/repository/mysql/entities/**/*.entity{.ts,.js}'], // only entities related with MySQL
       synchronize: true,
     }),
     MongooseModule.forRoot(`mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOST}:${process.env.MONGO_PORT}/${process.env.MONGO_DB}?retryWrites=true`, { connectionName: 'laniakeaMongoConnection' }),
