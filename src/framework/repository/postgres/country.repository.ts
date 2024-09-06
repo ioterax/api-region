@@ -2,15 +2,13 @@ import { Repository } from 'typeorm';
 
 import { CountryOutPort } from "@/application/ports/out/country.out.port";
 
-import { setTrace } from '@/common/common';
 import { Country } from './entities/country.entity';
 import { Injectable } from '@nestjs/common';
 import { ICountry } from '@atisiothings/laniakea-lib-central/dist/domain/region';
 
 @Injectable()
-export class CountryMongoDbRepository extends Repository<Country> implements CountryOutPort {
+export class CountryPostgresRepository extends Repository<Country> implements CountryOutPort {
 
-    
     updateById(id: String, domain: ICountry): Promise<ICountry | null> {
         throw new Error('Method not implemented.');
     }

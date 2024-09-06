@@ -51,11 +51,6 @@ services:
     command: gcloud beta emulators datastore start --project=datastore-wrapper --host-port=0.0.0.0:8081 --project emulator --store-on-disk
     # --no-store-on-disk --use-firestore-in-datastore-mode
 
-
-
-
-
-
 volumes:
   postgres-data:
     name: laniakea-postgres-data

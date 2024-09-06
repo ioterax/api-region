@@ -68,6 +68,13 @@ MongoDB
 https://www.geeksforgeeks.org/how-to-seed-a-mongodb-database-using-docker-compose/
 
 
+
+// OpenApi
+// https://rehmat-sayany.medium.com/integrating-swagger-with-nestjs-a-step-by-step-guide-abd532743c43
+
+
+
+
 --->                                                                               
                                                                                
                                                                                

@@ -8,7 +8,7 @@ import { PORT_OUT } from '@/config/ports.config';
 @Injectable()
 export class CountryService implements CountryCrudUseCase {
 
-  constructor(@Inject(PORT_OUT.DB.MONGODB) private readonly countryOutPort: CountryOutPort) {}
+  constructor(@Inject(CountryOutPort) private readonly countryOutPort: CountryOutPort) {}
 
   registerNew(country: ICountry): Promise<ICountry> {
     // add validation

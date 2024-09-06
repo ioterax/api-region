@@ -1,3 +1,7 @@
+interface DatabaseModuleOptions {
+    type: 'mongodb' | 'postgres' | 'mysql';
+  }
+  
 export const PORT_OUT = {
     DB: {
         MONGODB: 'PORT_OUT_MONGODB_TOKEN',

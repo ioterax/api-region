@@ -11,6 +11,11 @@ export class CountryController {
     @Inject(CountryInPort) private countryInPort: CountryInPort
   ) {}
 
+  @Get('/health')
+  healthCheck(): string {
+    return 'OK';
+  }
+
   @Post()
   create(@Body() country: ICountry) {
     return this.countryInPort.handleToRegister(country)
@@ -46,6 +51,5 @@ export class CountryController {
   getView(@Param('id') id: String): Promise<ICountry | null> {
     return this.countryInPort.handleSimpleViewFindOne(id);
   }
-
 
 }
