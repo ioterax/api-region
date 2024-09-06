@@ -57,12 +57,19 @@ function executeCommand(command: string, args: string[] = [], options: { cwd?: s
   return new Promise((resolve, reject) => {
     // Detectar o sistema operacional
     const platform = os.platform();
+    const release = os.release();
     let finalArgs = args;
 
     if (platform === 'win32') {
-      // No Windows, usar cmd.exe para comandos shell
-      finalArgs = ['/c', command, ...args];
-      command = 'cmd.exe';
+      // Verificar se é Windows 10 ou superior
+      const [major, minor] = release.split('.').map(Number);
+      if (major >= 10) {
+        // Windows 10 ou superior
+        finalArgs = ['/c', command, ...args];
+        command = 'cmd.exe';
+      } else {
+        return reject(new Error('This script requires Windows 10 or higher.'));
+      }
     } else if (platform === 'linux' || platform === 'darwin') {
       // No Linux e macOS, usar sh para comandos shell
       finalArgs = ['-c', `${command} ${args.join(' ')}`];
