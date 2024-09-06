@@ -3,6 +3,7 @@ import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from '@/app.module';
 import * as path from 'path';
+import * as os from 'os';
 
 const banner = `
 ██████  ███████  ██████  ██  ██████  ███    ██      █████  ██████  ██ 
@@ -23,7 +24,7 @@ const combinedArgs = [...containerUpArgs, ...containerServices];
 
 async function bootstrap() {
   if(
-    process.env.NODE_ENV === 'local' && process.env.CONTAUNER_ENABLE === 'true'
+    process.env.NODE_ENV === 'local' && process.env.CONTAINER_ENABLE === 'true'
   ) {
     await executeCommand(containerCommand, combinedArgs, { cwd: parentDir })
     .then(output => {
@@ -52,11 +53,24 @@ async function bootstrap() {
 }
 bootstrap();
 
-function executeCommand(command, args: string[] = [], options: { cwd?: string } = {}) {
+function executeCommand(command: string, args: string[] = [], options: { cwd?: string } = {}) {
   return new Promise((resolve, reject) => {
+    // Detectar o sistema operacional
+    const platform = os.platform();
+    let finalArgs = args;
 
-    console.log(`Executing command "${command} ${args.join(' ')}" on path "${options.cwd}"`);
-    const child = spawn(command, args, options);
+    if (platform === 'win32') {
+      // No Windows, usar cmd.exe para comandos shell
+      finalArgs = ['/c', command, ...args];
+      command = 'cmd.exe';
+    } else if (platform === 'linux' || platform === 'darwin') {
+      // No Linux e macOS, usar sh para comandos shell
+      finalArgs = ['-c', `${command} ${args.join(' ')}`];
+      command = 'sh';
+    }
+
+    console.log(`Executing command "${command} ${finalArgs.join(' ')}" on path "${options.cwd}"`);
+    const child = spawn(command, finalArgs, options);
 
     let stdoutData = '';
     let stderrData = '';
@@ -82,12 +96,6 @@ function executeCommand(command, args: string[] = [], options: { cwd?: string } 
     child.on('error', (error) => {
       reject(error);
     });
-
-    setTimeout(() => {
-      if (!child.killed) {
-        child.kill('SIGKILL');
-      }
-    }, 10000);
   });
 }
 
