@@ -5,9 +5,9 @@ import { StateOutPort } from "@/application/ports/out/state.out.port";
 import { State } from "@atisiothings/laniakea-lib-central/dist/domain/region";
 import { setTrace } from '@/common/common';
 
-export class StateRepository implements StateOutPort {
+export class StateMongoRepository implements StateOutPort {
 
-    constructor(@InjectModel(State.name) private domainModel: Model<State>) {}
+    constructor(@InjectModel(State.name, 'testConnection') private domainModel: Model<State>) {}
 
     save(domain: State): Promise<State> {
       // fix: IState

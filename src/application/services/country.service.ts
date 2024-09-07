@@ -3,7 +3,6 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ICountry } from '@atisiothings/laniakea-lib-central/dist/domain/region';
 import { CountryCrudUseCase, CountryViewUseCase } from '@/application/usescases/country.usecase';
 import { CountryOutPort } from '@/application/ports/out/country.out.port';
-import { PORT_OUT } from '@/config/ports.config';
 
 @Injectable()
 export class CountryService implements CountryCrudUseCase {

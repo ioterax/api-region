@@ -6,8 +6,6 @@ import { CountryOutPort } from "@/application/ports/out/country.out.port";
 import { Country } from "@/framework/repository/mongodb/schemas/country.schema";
 import { setTrace } from '@/common/common';
 
-console.log(`>>>>>>>>>>> ${process.env.MONGO_REGION_CN_NAME}`);
-
 @Injectable()
 export class CountryMongoDbRepository implements CountryOutPort {
 
