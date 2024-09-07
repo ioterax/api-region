@@ -15,8 +15,8 @@ export class StateService implements StateUseCase {
   }
 
   retrieveAll(): Promise<State[]> {
-    throw new DomainInvalidException('DOMAIN NOT IMPLEMENTED');
-    // return this.stateOutPort.findAll();
+    // throw new DomainInvalidException('DOMAIN NOT IMPLEMENTED');
+    return this.stateOutPort.findAll();
   }
 
   retrieveOne(id: String): Promise<State | null> {

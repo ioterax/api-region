@@ -10,6 +10,13 @@ import { StateModule } from './modules/state.module';
   providers: [{provide: APP_GUARD, useClass: AuthGuard}],
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
+    // I18nModule.forRoot({
+    //   fallbackLanguage: 'en',
+    //   loaderOptions: {
+    //     path: path.join(__dirname, '/i18n/'),
+    //     watch: true,
+    //   },
+    // }),    
     CountryModule,
     StateModule,
   ],

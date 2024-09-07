@@ -7,7 +7,7 @@ import { setTrace } from '@/common/common';
 
 export class StateMongoRepository implements StateOutPort {
 
-    constructor(@InjectModel(State.name, 'testConnection') private domainModel: Model<State>) {}
+    constructor(@InjectModel(State.name, process.env.MONGO_REGION_CN_NAME) private domainModel: Model<State>) {}
 
     save(domain: State): Promise<State> {
       // fix: IState
@@ -25,7 +25,7 @@ export class StateMongoRepository implements StateOutPort {
               foreignField: '_id',
               as: 'country'
             } },
-            { $unwind: "$country" }
+            { $unwind: { path: "$country", preserveNullAndEmptyArrays: true } },
        ]).exec();    
     }
 
@@ -40,7 +40,7 @@ export class StateMongoRepository implements StateOutPort {
               foreignField: '_id',
               as: 'country'
             } },
-            { $unwind: "$country" }
+            { $unwind: { path: "$country", preserveNullAndEmptyArrays: true } },
        ]).exec()[0];
     }
     
@@ -53,5 +53,4 @@ export class StateMongoRepository implements StateOutPort {
       const filter  = { _id: id };
       await this.domainModel.findByIdAndDelete(filter)
     }
-    
 }

@@ -1,6 +1,8 @@
 import { NestFactory } from '@nestjs/core';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from '@/app.module';
+import { VersioningType } from '@nestjs/common';
+import { setupB2CSwagger } from './api/api-b2c.config';
+import { setupB2BSwagger } from './api/api-b2b.config';
 
 const banner = `
 ██████  ███████  ██████  ██  ██████  ███    ██      █████  ██████  ██ 
@@ -15,15 +17,16 @@ console.log(banner);
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  const config = new DocumentBuilder()
-    .setTitle('Region API')
-    .setDescription('API to work with Countries and States data.')
-    .setVersion('0.1')
-    .build();
+  // Versioning
+  app.enableVersioning({
+    type: VersioningType.URI,
+  });
 
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  // Api
+  setupB2BSwagger(app);
+  setupB2CSwagger(app);
 
   await app.listen(parseInt(process.env.PORT as string, 10) || 3000);
 }
+
 bootstrap();

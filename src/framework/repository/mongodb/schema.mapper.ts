@@ -18,8 +18,8 @@ export const countryConfig: DatabaseConfigOptions = {
 }
 
 export const stateConfig: DatabaseConfigOptions = {
-  connectName: 'testConnection',
-  dbName: 'testDb',
+  connectName: process.env.MONGO_REGION_CN_NAME as string,
+  dbName: 'region',
   models: [
     { name: State.name, schema: StateSchema }
   ],
