@@ -1,15 +1,17 @@
+import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 
 import { CountryOutPort } from "@/application/ports/out/country.out.port";
 import { Country } from "@/framework/repository/mongodb/schemas/country.schema";
 import { setTrace } from '@/common/common';
-import { Injectable } from "@nestjs/common";
+
+console.log(`>>>>>>>>>>> ${process.env.MONGO_REGION_CN_NAME}`);
 
 @Injectable()
 export class CountryMongoDbRepository implements CountryOutPort {
 
-    constructor(@InjectModel(Country.name, 'regionConnection') private domainModel: Model<Country>) {}
+    constructor(@InjectModel(Country.name, process.env.MONGO_REGION_CN_NAME) private domainModel: Model<Country>) {}
 
     async save(domain: Country): Promise<Country> {
         const e = setTrace(domain, true);
