@@ -6,7 +6,7 @@ import { StateOutPort } from "@/application/ports/out/state.out.port";
 import { StateMongoRepository } from "./state.repository";
 import { DatabaseConfigOptions } from "@/modules/context.module";
 
-export const regionConfig: DatabaseConfigOptions = {  
+export const countryConfig: DatabaseConfigOptions = {  
   connectName: process.env.MONGO_REGION_CN_NAME as string,
   dbName: 'region',
   models: [

@@ -14,11 +14,11 @@ import { CountryInPort } from '@/application/ports/in/country.in.port';
 // Framework
 import { CountryController } from '@/framework/controller/country.controller';
 import { DynamicDatabaseModule } from './context.module';
-import { regionConfig } from '@/framework/repository/mongodb/schema.mapper';
+import { countryConfig } from '@/framework/repository/mongodb/schema.mapper';
 
 @Module({
   imports: [
-    DynamicDatabaseModule.forFeature(regionConfig),
+    DynamicDatabaseModule.forFeature(countryConfig),
   ],
   controllers: [
     CountryController
