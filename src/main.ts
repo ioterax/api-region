@@ -23,23 +23,23 @@ const containerUpArgs = ['compose', 'up', '-d'];
 const combinedArgs = [...containerUpArgs, ...containerServices];
 
 async function bootstrap() {
-  if(
+  if (
     process.env.NODE_ENV === 'local' && process.env.CONTAINER_ENABLE === 'true'
   ) {
     await executeCommand(containerCommand, combinedArgs, { cwd: parentDir })
-    .then(output => {
+      .then(output => {
         console.log('Docker command output:\n', output);
-    })
-    .catch(error => {
+      })
+      .catch(error => {
         console.error('Error:', error);
-    });  
+      });
 
     process.on('SIGINT', () => handleSignal('SIGINT'));
-    process.on('SIGTERM', () => handleSignal('SIGTERM'));  
+    process.on('SIGTERM', () => handleSignal('SIGTERM'));
   }
 
   const app = await NestFactory.create(AppModule);
-  
+
   const config = new DocumentBuilder()
     .setTitle('Region API')
     .setDescription('API to work with Countries and States data.')
@@ -57,16 +57,17 @@ function executeCommand(command: string, args: string[] = [], options: { cwd?: s
   return new Promise((resolve, reject) => {
     const platform = os.platform();
     const release = os.release();
+    const arch = os.arch();
+
     let finalArgs = args;
 
     if (platform === 'win32') {
-      console.log('WINDOWS OS');
       const [major, minor] = release.split('.').map(Number);
-      if (major >= 10) {
+      if (major >= 10 && arch === 'x64') {
         finalArgs = ['/c', command, ...args];
         command = 'cmd.exe';
       } else {
-        return reject(new Error('This script requires Windows 10 or higher.'));
+        return reject(new Error('This script requires Windows 10 or higher with 64-bit architecture.'));
       }
     } else if (platform === 'linux' || platform === 'darwin') {
       finalArgs = ['-c', `${command} ${args.join(' ')}`];
@@ -81,12 +82,10 @@ function executeCommand(command: string, args: string[] = [], options: { cwd?: s
 
     child.stdout.on('data', (data) => {
       stdoutData += data.toString();
-      // console.log(`stdout: ${data}`);
     });
 
     child.stderr.on('data', (data) => {
       stderrData += data.toString();
-      // console.error(`stderr: ${data}`);
     });
 
     child.on('close', (code) => {
@@ -104,18 +103,18 @@ function executeCommand(command: string, args: string[] = [], options: { cwd?: s
 }
 
 async function cleanup() {
-  if(process.env.NODE_ENV !== 'local') return;
-  if(process.env.CONTAINER_STOP !== 'true') return;
+  if (process.env.NODE_ENV !== 'local') return;
+  if (process.env.CONTAINER_STOP !== 'true') return;
 
   console.log('Performing cleanup tasks...');
-    
+
   console.log('Executing command', containerCommand, containerDownArgs);
   await executeCommand(containerCommand, containerDownArgs, { cwd: parentDir })
     .then(output => {
-        console.log('Docker command output:\n', output);
+      console.log('Docker command output:\n', output);
     })
     .catch(error => {
-        console.error('Error:', error);
+      console.error('Error:', error);
     });
 
   console.log('Cleanup complete.');
@@ -124,7 +123,7 @@ async function cleanup() {
 async function handleSignal(signal: string) {
   try {
     console.log(`Received signal: ${signal}. Cleaning up...`);
-    await cleanup();      
+    await cleanup();
   } catch (error) {
     console.error('Error executing command:', error);
   } finally {
