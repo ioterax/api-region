@@ -2,57 +2,24 @@ import { Module, Provider } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
-// import { PORT_OUT } from "@/config/ports.config";
-// import { CountryMongoDbRepository } from "@/framework/repository/mongodb/country.repository";
-// import { CountrySchema } from "@/framework/repository/mongodb/schemas/country.schema";
-// import { Country } from "@atisiothings/laniakea-lib-central/dist/domain/region";
-// import { CountryOutPort } from "@/application/ports/out/country.out.port";
-
-// @Module({
-//     imports: [
-//       // MongooseModule.forRoot(`mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOST}:${process.env.MONGO_PORT}/${process.env.MONGO_DB}?authSource=admin&retryWrites=true`)
-//       // MongooseModule.forRoot(`mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@{process.env.MONGO_HOST}:${process.env.MONGO_PORT}/${process.env.MONGO_DB}/?authSource=admin`),
-//       MongooseModule.forRoot(`mongodb://local:local@localhost:27017/?authSource=admin`),
-//       MongooseModule.forFeature([{ name: Country.name, schema: CountrySchema }])
-//     ],
-//     providers: [
-//       { provide: CountryOutPort, useClass: CountryMongoDbRepository },
-//     ],
-//     exports: [
-//       CountryMongoDbRepository, // Exporta o repositório
-//       CountryOutPort,           // Exporta a interface (token)
-//     ],
-//   })
-//   export class MongoDbModule {}
-  
-// @Module({
-//   imports: [
-//     MongooseModule.forRoot(`mongodb://local:local@localhost:27017/?authSource=admin`),
-//     MongooseModule.forFeature([{ name: Country.name, schema: CountrySchema }]),
-//   ],
-//   providers: [
-//     { provide: CountryOutPort, useClass: CountryMongoDbRepository },
-//   ],
-//   exports: [
-//     CountryOutPort
-//   ],
-// })
-// export class MongoDbModule {}
-
 // TODO: move to library
 @Module({})
 export class MongoDbModule {
-  static create(options?: { 
+  static create(connectName: string, databaseName: string, options?: { 
     outPortProviders?: Provider[],
     models?: { name: string, schema: any }[]
   }) {
     const providers = options?.outPortProviders || [];
     const models = options?.models || [];
 
+    const cnUri = (process.env.NODE_ENV === 'local' || process.env.NODE_ENV === 'Docker') ? 'mongodb' : 'mongodb+srv';
+    const dbUri = `${cnUri}://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOST}:${process.env.MONGO_PORT}/${databaseName}?authSource=admin`;
+    console.log(dbUri);
+
     @Module({
       imports: [
-        MongooseModule.forRoot('mongodb://local:local@localhost:27017/?authSource=admin'),
-        MongooseModule.forFeature(models),
+        MongooseModule.forRoot(dbUri, { connectionName: connectName }),
+        MongooseModule.forFeature(models, connectName),
       ],
       providers: [...providers],
       exports: [...providers],

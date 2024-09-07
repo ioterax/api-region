@@ -1,8 +1,6 @@
-import { Module, DynamicModule, Provider } from "@nestjs/common";
-import { MongoDbModule, PostgresModule, MySqlModule } from './repository.module';
-import { CountryOutPort } from "@/application/ports/out/country.out.port";
-import { CountryMongoDbRepository } from "@/framework/repository/mongodb/country.repository";
-import { Country, CountrySchema } from '@/framework/repository/mongodb/schemas/country.schema';
+import { Module, DynamicModule } from "@nestjs/common";
+import { MongoDbModule } from './repository.module';
+import { mongoDb } from "@/framework/repository/mongodb/schema.mapper";
 
 @Module({})
 export class DynamicDatabaseModule {
@@ -12,9 +10,10 @@ export class DynamicDatabaseModule {
 
     switch (process.env.DATABASE_TYPE) {
       case 'mongodb':
-        selectedModule = MongoDbModule.create({
-          models: mongoDbModels,
-          outPortProviders: mongoDbProviders
+        // if more connections is needed duplicate and use others constants
+        selectedModule = MongoDbModule.create(mongoDb.region.connectName, mongoDb.region.dbName, {
+          models: mongoDb.region.models,
+          outPortProviders: mongoDb.region.providers
         });
         break;
         default:
@@ -26,11 +25,3 @@ export class DynamicDatabaseModule {
     };
   }
 }
-
-const mongoDbModels = [
-  { name: Country.name, schema: CountrySchema }
-];
-
-const mongoDbProviders = [
-  { provide: CountryOutPort, useClass: CountryMongoDbRepository },
-];

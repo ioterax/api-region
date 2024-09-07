@@ -9,7 +9,7 @@ import { Injectable } from "@nestjs/common";
 @Injectable()
 export class CountryMongoDbRepository implements CountryOutPort {
 
-    constructor(@InjectModel(Country.name) private domainModel: Model<Country>) {}
+    constructor(@InjectModel(Country.name, 'regionConnection') private domainModel: Model<Country>) {}
 
     async save(domain: Country): Promise<Country> {
         const e = setTrace(domain, true);
