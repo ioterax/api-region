@@ -1,13 +1,12 @@
-import { Module } from "@nestjs/common";
+import { Module, Provider } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
 // import { PORT_OUT } from "@/config/ports.config";
-import { CountryMongoDbRepository } from "@/framework/repository/mongodb/country.repository";
-import { CountryPostgresRepository } from "@/framework/repository/postgres/country.repository";
-import { CountrySchema } from "@/framework/repository/mongodb/schemas/country.schema";
-import { Country } from "@atisiothings/laniakea-lib-central/dist/domain/region";
-import { CountryOutPort } from "@/application/ports/out/country.out.port";
+// import { CountryMongoDbRepository } from "@/framework/repository/mongodb/country.repository";
+// import { CountrySchema } from "@/framework/repository/mongodb/schemas/country.schema";
+// import { Country } from "@atisiothings/laniakea-lib-central/dist/domain/region";
+// import { CountryOutPort } from "@/application/ports/out/country.out.port";
 
 // @Module({
 //     imports: [
@@ -26,19 +25,45 @@ import { CountryOutPort } from "@/application/ports/out/country.out.port";
 //   })
 //   export class MongoDbModule {}
   
-@Module({
-  imports: [
-    MongooseModule.forRoot(`mongodb://local:local@localhost:27017/?authSource=admin`),
-    MongooseModule.forFeature([{ name: Country.name, schema: CountrySchema }]),
-  ],
-  providers: [
-    { provide: CountryOutPort, useClass: CountryMongoDbRepository },
-  ],
-  exports: [
-    CountryOutPort
-  ],
-})
-export class MongoDbModule {}
+// @Module({
+//   imports: [
+//     MongooseModule.forRoot(`mongodb://local:local@localhost:27017/?authSource=admin`),
+//     MongooseModule.forFeature([{ name: Country.name, schema: CountrySchema }]),
+//   ],
+//   providers: [
+//     { provide: CountryOutPort, useClass: CountryMongoDbRepository },
+//   ],
+//   exports: [
+//     CountryOutPort
+//   ],
+// })
+// export class MongoDbModule {}
+
+// TODO: move to library
+@Module({})
+export class MongoDbModule {
+  static create(options?: { 
+    outPortProviders?: Provider[],
+    models?: { name: string, schema: any }[]
+  }) {
+    const providers = options?.outPortProviders || [];
+    const models = options?.models || [];
+
+    @Module({
+      imports: [
+        MongooseModule.forRoot('mongodb://local:local@localhost:27017/?authSource=admin'),
+        MongooseModule.forFeature(models),
+      ],
+      providers: [...providers],
+      exports: [...providers],
+    })
+    class MongoDbModuleWithOptions {}
+
+    return MongoDbModuleWithOptions;
+  }
+}
+
+
 
   @Module({
     imports: [TypeOrmModule.forRoot({
@@ -53,7 +78,7 @@ export class MongoDbModule {}
       synchronize: true, // disable in production
     })],
     providers: [
-      { provide: CountryOutPort, useClass: CountryPostgresRepository }, // => provide Framework Crud Repository
+      // { provide: CountryOutPort, useClass: CountryPostgresRepository }, // => provide Framework Crud Repository
     ],
   })
   export class PostgresModule {}
@@ -73,7 +98,6 @@ export class MongoDbModule {}
     providers: [
     ],
     exports: [
-      CountryOutPort
     ],    
   })
   export class MySqlModule {}

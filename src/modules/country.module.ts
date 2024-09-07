@@ -18,6 +18,7 @@ import { CountryController } from '@/framework/controller/country.controller';
 // import { CountryMongoDbRepository } from '@/framework/repository/mongodb/country.repository';
 // import { CountryOutPort } from '@/application/ports/out/country.out.port';
 import { DynamicDatabaseModule } from './context.module';
+
 // import { MongoDbModule, MySqlModule, PostgresModule } from './repository.module';
 // import { CountryPostgresRepository } from '@/framework/repository/postgres/country.repository';
 
@@ -32,7 +33,7 @@ import { DynamicDatabaseModule } from './context.module';
     { provide: CountryInPort, useClass: CountryRestAdapter },               // => provide Adapter In [rest >> app >> db]
     { provide: CountryCrudUseCase, useClass: CountryService },              // => provide Application Service
     { provide: CountryViewUseCase, useClass: CountryViewService },          // => provide Application Service
-    // { provide: CountryOutPort, useClass: CountryMongoDbRepository },   // => provide Framework Crud Repository
+    // { provide: CountryOutPort, useClass: CountryMongoDbRepository },
     // { provide: PORT_OUT.DB.POSTGRES, useClass: CountryPostgresRepository }, // => provide Framework Crud Repository
   ],
 })

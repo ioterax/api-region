@@ -1,43 +1,36 @@
-import { Module, DynamicModule } from "@nestjs/common";
+import { Module, DynamicModule, Provider } from "@nestjs/common";
 import { MongoDbModule, PostgresModule, MySqlModule } from './repository.module';
+import { CountryOutPort } from "@/application/ports/out/country.out.port";
+import { CountryMongoDbRepository } from "@/framework/repository/mongodb/country.repository";
+import { Country, CountrySchema } from '@/framework/repository/mongodb/schemas/country.schema';
 
 @Module({})
 export class DynamicDatabaseModule {
 
-  static forFeature(
-    // options: {
-    //   imports?: any[];
-    //   inject?: any[];
-    //   databaseType: 'mongodb' | 'postgres' | 'mysql'
-    // }
-  ): DynamicModule {
-
-      let selectedModule;
+  static forFeature(): DynamicModule {
+    let selectedModule;
 
     switch (process.env.DATABASE_TYPE) {
       case 'mongodb':
-        console.log(
-          'MONGODB',
-          process.env.MONGO_USER,
-          process.env.MONGO_PASSWORD,
-          process.env.MONGO_HOST,
-          process.env.MONGO_PORT,
-          process.env.MONGO_DB,
-        )
-        selectedModule = MongoDbModule;
+        selectedModule = MongoDbModule.create({
+          models: mongoDbModels,
+          outPortProviders: mongoDbProviders
+        });
         break;
-      case 'postgres':
-        selectedModule = PostgresModule;
-        break;
-      case 'mysql':
-        selectedModule = MySqlModule;
-        break;
+        default:
+          throw new Error('Invalid database type - Include a new database module if is needed.')
     }
 
-    // console.log([selectedModule, ...(options.imports || [])]);
     return {
-      module: selectedModule
-      // imports: [selectedModule, ...(options.imports || [])],      
+      module: selectedModule,
     };
   }
 }
+
+const mongoDbModels = [
+  { name: Country.name, schema: CountrySchema }
+];
+
+const mongoDbProviders = [
+  { provide: CountryOutPort, useClass: CountryMongoDbRepository },
+];
