@@ -2,8 +2,8 @@ import { Module, Provider } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
 import { TypeOrmModule } from "@nestjs/typeorm";
 
-// TODO: move to library
-@Module({})
+// // TODO: move to library
+// @Module({})
 export class MongoDbModule {
   static create(connectName: string, databaseName: string, options?: { 
     outPortProviders?: Provider[],
