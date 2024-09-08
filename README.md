@@ -11,6 +11,9 @@
 </pre>
 
 <!---
+DOC
+npx compodoc -p tsconfig.json -s -w 
+
 LOG
 https://levelup.gitconnected.com/error-handling-and-logging-in-nestjs-best-practices-ecc871ade7d7
 

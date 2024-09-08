@@ -1,8 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from '@/app.module';
 import { VersioningType } from '@nestjs/common';
-import { setupB2CSwagger } from './api/api-b2c.config';
-import { setupB2BSwagger } from './api/api-b2b.config';
+import { setupB2CSwagger } from './api/swagger/api-b2c.config';
+import { setupB2BSwagger } from './api/swagger/api-b2b.config';
 
 const banner = `
 ██████  ███████  ██████  ██  ██████  ███    ██      █████  ██████  ██ 

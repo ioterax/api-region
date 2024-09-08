@@ -13,5 +13,6 @@ export function setupB2BSwagger(app: INestApplication): void {
   const document = SwaggerModule.createDocument(app, options, {
     include: [CountryModule],
   });
+
   SwaggerModule.setup('api/b2b', app, document);
 }
