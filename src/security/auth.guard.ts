@@ -1,14 +1,17 @@
 import { Reflector } from '@nestjs/core';
-import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
+import { Injectable, CanActivate, ExecutionContext, Inject } from '@nestjs/common';
 import { Observable } from 'rxjs';
+
 import { IS_PUBLIC_KEY } from '@/config/api.config';
+import { AppLogger } from '@/framework/app.logger';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(
+    private readonly logger: AppLogger,
       // private jwtService: JwtService,
-      private reflector: Reflector,
-    ) {}
+    private reflector: Reflector,
+  ) {}
 
   canActivate(
     context: ExecutionContext,
@@ -21,7 +24,7 @@ export class AuthGuard implements CanActivate {
     if (isPublic) { return true; }
       
     const request = context.switchToHttp().getRequest();
-    console.log('CHECK PERMISSIONS...');
+    this.logger.debug('CHECK PERMISSIONS...');
     return true;
   }
 }

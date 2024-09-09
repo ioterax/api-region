@@ -1,5 +1,7 @@
 import { Module } from '@nestjs/common';
 
+import { AppLogger } from '@/framework/app.logger';
+
 // Adapter In
 import { CountryRestAdapter } from '@/adapters/in/rest/country.rest.adapter';
 
@@ -24,6 +26,7 @@ import { countryConfig } from '@/framework/repository/mongodb/schema.mapper';
     CountryController
   ],
   providers: [
+    AppLogger,
     { provide: CountryInPort, useClass: CountryRestAdapter },               // => provide Adapter In [rest >> app >> db]
     { provide: CountryCrudUseCase, useClass: CountryService },              // => provide Application Service
     { provide: CountryViewUseCase, useClass: CountryViewService },          // => provide Application Service

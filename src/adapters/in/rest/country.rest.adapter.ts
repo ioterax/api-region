@@ -1,4 +1,5 @@
 import { Inject, Injectable } from "@nestjs/common";
+import { AppLogger } from '@/framework/app.logger';
 
 import { ICountry } from "@atisiothings/laniakea-lib-central/dist/domain/region";
 import { CountryInPort } from "@/application/ports/in/country.in.port";
@@ -6,12 +7,14 @@ import { CountryCrudUseCase, CountryViewUseCase } from "@/application/usescases/
 
 import { MAPPER_ID_NAME } from "../mapper/mapper";
 
+
 @Injectable()
 export class CountryRestAdapter implements CountryInPort {
 
     constructor(
-        @Inject(CountryCrudUseCase) private readonly crudUseCase: CountryCrudUseCase,
-        @Inject(CountryViewUseCase) private readonly viewUseCase: CountryViewUseCase
+      @Inject(AppLogger) private readonly logger: AppLogger,
+      @Inject(CountryCrudUseCase) private readonly crudUseCase: CountryCrudUseCase,
+      @Inject(CountryViewUseCase) private readonly viewUseCase: CountryViewUseCase,
     ) {}
 
     handleToRegister(country: ICountry): Promise<ICountry> {
@@ -19,6 +22,7 @@ export class CountryRestAdapter implements CountryInPort {
     }
 
     handleFindAll(): Promise<ICountry[]> {
+      this.logger.info('test...');
       return this.crudUseCase.retrieveAll();
     }
 
