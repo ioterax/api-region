@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
-import { ICountry } from '@atisiothings/laniakea-lib-central/dist/domain/region';
+import { ICountry } from '@atisiothings/laniakea-lib-central/dist/lib/central';
 
 /**
  * This type represents a Mongoose document for the `Country` class.
@@ -9,8 +9,10 @@ export type CountryDocumentType = HydratedDocument<Country>;
 
 /**
  * The `Country` class represents a country entity within the application.
- * It implements the `ICountry` interface and is decorated with the Mongoose schema decorator.
+ * It implements the {@link ICountry} interface and is decorated with the Mongoose schema decorator.
  * This schema defines the structure of the `countries` collection in MongoDB.
+ * 
+ * For more details on the `ICountry` interface, see the {@link ICountry} documentation.
  */
 @Schema({ collection: 'countries' })
 export class Country implements ICountry {
