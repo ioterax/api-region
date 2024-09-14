@@ -9,6 +9,7 @@ import { DatabaseConfigOptions } from "@/modules/context.module";
 export const countryConfig: DatabaseConfigOptions = {  
   connectName: process.env.MONGO_REGION_CN_NAME as string,
   dbName: 'region',
+  dbType: process.env.DATABASE_TYPE as string,
   models: [
     { name: Country.name, schema: CountrySchema },
   ],
@@ -20,6 +21,7 @@ export const countryConfig: DatabaseConfigOptions = {
 export const stateConfig: DatabaseConfigOptions = {
   connectName: process.env.MONGO_REGION_CN_NAME as string,
   dbName: 'region',
+  dbType: process.env.DATABASE_TYPE as string,
   models: [
     { name: State.name, schema: StateSchema }
   ],

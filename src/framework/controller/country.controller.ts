@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Inject, Param, Post, Put } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
-import { ICountry } from '@atisiothings/laniakea-lib-central/dist/domain/region';
+import { ICountry } from '@atisiothings/laniakea-lib-central/dist/lib/central';
 import { CountryInPort } from '@/application/ports/in/country.in.port';
 
 /**

@@ -7,7 +7,9 @@ export class DynamicDatabaseModule {
   static forFeature(databaseConfigOptions: DatabaseConfigOptions): DynamicModule {
     let selectedModule;
 
-    switch (process.env.DATABASE_TYPE) {
+    // process.env.DATABASE_TYPE
+
+    switch (databaseConfigOptions.dbType) {
       case 'mongodb':
         // if more connections is needed duplicate and use others constants
         selectedModule = MongoDbModule.create(databaseConfigOptions.connectName, databaseConfigOptions.dbName, {
@@ -29,6 +31,7 @@ export class DynamicDatabaseModule {
 export interface DatabaseConfigOptions {
   connectName: string;
   dbName: string;
+  dbType: string;
   models: MongoModdel[] | undefined
   outPortProviders: Provider[];
 }

@@ -10,7 +10,6 @@ import { CountryCrudUseCase, CountryViewUseCase } from '@/application/usescases/
 import { CountryService, CountryViewService } from '@/application/services/country.service';
 
 // Application Ports
-// import { PORT_OUT } from '@/config/ports.config';
 import { CountryInPort } from '@/application/ports/in/country.in.port';
 
 // Framework
