@@ -78,6 +78,39 @@ https://www.geeksforgeeks.org/how-to-seed-a-mongodb-database-using-docker-compos
 
 
 
+
+BADGES
+Como usar ícones e badges:
+Markdown: Badges são frequentemente adicionados a arquivos README.md usando Markdown. Aqui está um exemplo de como adicionar um badge para a versão do NPM:
+
+markdown
+Copy code
+![NPM Version](https://img.shields.io/npm/v/@nestjs/core.svg)
+HTML: Você também pode usar HTML para adicionar badges:
+
+html
+Copy code
+<a href="https://www.npmjs.com/package/@nestjs/core" target="_blank">
+   <img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version">
+</a>
+Sites para criar e personalizar badges:
+Shields.io: Este é o site mais popular para criar badges customizados. Você pode escolher entre uma variedade de ícones, cores, e estilos. Você pode até mesmo criar badges personalizados que mostrem informações específicas sobre seu projeto.
+
+BadgeMaker: Outra ferramenta útil para criar badges com suporte a várias integrações, como NPM, CI/CD, GitHub, etc.
+
+SimpleIcons: Fornece ícones SVG para várias marcas populares, que você pode usar como parte de seus badges.
+
+Exemplo de como criar um badge customizado no Shields.io:
+Acesse o Shields.io. 
+Escolha o estilo e o tipo de badge que deseja criar.
+Customize o texto, cor, ícone, e outros parâmetros.
+O site irá gerar a URL do badge, que você pode adicionar ao seu README.md usando Markdown ou HTML.
+
+
+https://shields.io/
+https://badgen.net/
+https://simpleicons.org/
+
 --->                                                                               
                                                                                
                                                                                
