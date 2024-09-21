@@ -1,8 +1,9 @@
 import { Body, Controller, Delete, Get, Inject, Param, Post, Put } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
-import { ICountry } from '@atisiothings/laniakea-lib-central/dist/lib/central';
+import { ICountry } from '@atisiothings/laniakea-lib-central/dist/central';
 import { CountryInPort } from '@/application/ports/in/country.in.port';
+import { Public } from '@atisiothings/laniakea-lib-http/dist/security/auth.guard';
 
 /**
  * Controller that handles HTTP requests for Country-related operations.
@@ -43,6 +44,7 @@ export class CountryController {
    * 
    * @returns A promise that resolves to an array of Country entities.
    */
+  // @Public()
   @Get('/op')
   list(): Promise<ICountry[]> {
     return this.countryInPort.handleFindAll();

@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
-import { ICountry } from '@atisiothings/laniakea-lib-central/dist/lib/central';
+import { ICountry } from '@atisiothings/laniakea-lib-central/dist/central';
 
 /**
  * This type represents a Mongoose document for the `Country` class.

@@ -13,8 +13,8 @@ import { StateInPort } from '@/application/ports/in/state.in.port';
 
 // Framework
 import { StateController } from '@/framework/controller/state.controller';
-import { DynamicDatabaseModule } from './context.module';
-import { stateConfig } from '@/framework/repository/mongodb/schema.mapper';
+import { DynamicDatabaseModule } from "@atisiothings/laniakea-lib-database/dist/module/context.module";
+import { stateConfig } from '@/framework/repository/database.config';
 
 @Module({
   imports: [

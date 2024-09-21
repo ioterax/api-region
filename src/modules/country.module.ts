@@ -1,7 +1,5 @@
 import { Module } from '@nestjs/common';
 
-import { AppLogger } from '@/framework/app.logger';
-
 // Adapter In
 import { CountryRestAdapter } from '@/adapters/in/rest/country.rest.adapter';
 
@@ -14,8 +12,9 @@ import { CountryInPort } from '@/application/ports/in/country.in.port';
 
 // Framework
 import { CountryController } from '@/framework/controller/country.controller';
-import { DynamicDatabaseModule } from './context.module';
-import { countryConfig } from '@/framework/repository/mongodb/schema.mapper';
+import { DynamicDatabaseModule } from "@atisiothings/laniakea-lib-database/dist/module/context.module";
+import { countryConfig } from '@/framework/repository/database.config';
+import { AppLogger } from '@atisiothings/laniakea-lib-audit';
 
 @Module({
   imports: [

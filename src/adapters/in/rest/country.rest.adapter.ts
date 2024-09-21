@@ -1,7 +1,6 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { AppLogger } from '@/framework/app.logger';
-
-import { ICountry } from "@atisiothings/laniakea-lib-central/dist/domain/region";
+import { AppLogger } from '@atisiothings/laniakea-lib-audit';
+import { ICountry } from "@atisiothings/laniakea-lib-central/dist/central";
 import { CountryInPort } from "@/application/ports/in/country.in.port";
 import { CountryCrudUseCase, CountryViewUseCase } from "@/application/usescases/country.usecase";
 

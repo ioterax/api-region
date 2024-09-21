@@ -1,10 +1,10 @@
 import { CountryOutPort } from "@/application/ports/out/country.out.port";
-import { CountryMongoDbRepository } from "./country.repository";
-import { Country, CountrySchema } from "./schemas/country.schema";
-import { State, StateSchema } from "./schemas/state.schema";
+import { CountryMongoDbRepository } from "./mongodb/country.repository";
+import { Country, CountrySchema } from "./mongodb/schemas/country.schema";
+import { State, StateSchema } from "./mongodb/schemas/state.schema";
 import { StateOutPort } from "@/application/ports/out/state.out.port";
-import { StateMongoRepository } from "./state.repository";
-import { DatabaseConfigOptions } from "@/modules/context.module";
+import { StateMongoRepository } from "./mongodb/state.repository";
+import { DatabaseConfigOptions } from "@atisiothings/laniakea-lib-database/dist/module/context.module";
 
 export const countryConfig: DatabaseConfigOptions = {  
   connectName: process.env.MONGO_REGION_CN_NAME as string,
