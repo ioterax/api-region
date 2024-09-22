@@ -3,7 +3,8 @@ import { ConfigModule } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 
 import { LoggerModule, AppLogger } from '@atisiothings/laniakea-lib-audit';
-import { AuthGuard } from '@atisiothings/laniakea-lib-http/dist/security/auth.guard';
+import { AuthClientModule } from '@atisiothings/laniakea-lib-http/dist/modules/auth.module';
+import { AuthGuard } from '@/security/auth.guard';
 import { CountryModule } from '@/modules/country.module';
 import { StateModule } from './modules/state.module';
 
@@ -11,13 +12,16 @@ import { StateModule } from './modules/state.module';
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
     LoggerModule.forRoot({ level: 'debug' }),
+    AuthClientModule.forRoot('localhost:50051'),
     CountryModule,
     StateModule,
   ],
   providers: [
+    AppLogger,
     {provide: APP_GUARD, useClass: AuthGuard},
-    AppLogger
   ],
-  exports: [AppLogger]
+  exports: [
+    // AppLogger,
+  ]
 })
 export class AppModule {}
