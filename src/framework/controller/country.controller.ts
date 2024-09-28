@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Get, Inject, Param, Post, Put } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Inject,
+  Param,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 import { ICountry } from '@atisiothings/laniakea-lib-central/dist/central';
@@ -7,30 +16,27 @@ import { CountryInPort } from '@/application/ports/in/country.in.port';
 
 /**
  * Controller that handles HTTP requests for Country-related operations.
- * 
+ *
  * Provides endpoints for creating, retrieving, updating, and deleting Country entities,
  * as well as simplified view retrieval. It interacts with the application layer via the
  * injected `CountryInPort` interface.
- * 
+ *
  * @version 1
  * @path /country
  */
 @ApiTags('Country Endpoints')
-@Controller({ path: '/country', version: '1' })
+@Controller({ path: '/region/country', version: '1' })
 export class CountryController {
-
   /**
    * Creates an instance of CountryController.
-   * 
+   *
    * @param countryInPort - The application service handling Country operations.
    */
-  constructor(
-    @Inject(CountryInPort) private countryInPort: CountryInPort
-  ) {}
+  constructor(@Inject(CountryInPort) private countryInPort: CountryInPort) {}
 
   /**
    * Handles the creation of a new Country entity.
-   * 
+   *
    * @param country - The Country entity to be created.
    * @returns The result of the creation operation.
    */
@@ -41,7 +47,7 @@ export class CountryController {
 
   /**
    * Retrieves a list of all Country entities.
-   * 
+   *
    * @returns A promise that resolves to an array of Country entities.
    */
   // @Public()
@@ -52,7 +58,7 @@ export class CountryController {
 
   /**
    * Retrieves a single Country entity by its ID.
-   * 
+   *
    * @param id - The ID of the Country entity to retrieve.
    * @returns A promise that resolves to the found Country entity or null if not found.
    */

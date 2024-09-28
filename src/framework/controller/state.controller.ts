@@ -4,7 +4,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { StateInPort } from '@/application/ports/in/state.in.port';
 
 @ApiTags('State Endpoints')
-@Controller('/state')
+@Controller('/region/state')
 export class StateController {
 
   constructor(

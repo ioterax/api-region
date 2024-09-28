@@ -23,7 +23,8 @@
   "dependencies": {
     "@atisiothings/laniakea-lib-central": "^0.0.61",
     "@atisiothings/laniakea-lib-database": "^0.0.8",
-    "@atisiothings/laniakea-lib-http": "^0.0.47",
+    "@atisiothings/laniakea-lib-http": "^0.0.55",
+    "@atisiothings/laniakea-lib-audit": "^0.0.9",
     "@grpc/grpc-js": "^1.11.3",
     "@nestjs/common": "^10.3.10",
     "@nestjs/config": "^3.2.3",

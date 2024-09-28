@@ -16,10 +16,7 @@ import { StateModule } from './modules/state.module';
     CountryModule,
     StateModule,
   ],
-  providers: [
-    AppLogger,
-    {provide: APP_GUARD, useClass: AuthGuard},
-  ],
+  providers: [AppLogger, { provide: APP_GUARD, useClass: AuthGuard }],
   exports: [
     // AppLogger,
   ]
