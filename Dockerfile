@@ -10,6 +10,6 @@ RUN npm install \
   && npm run build \
   && rm -rf src/
 
-EXPOSE 3000
+EXPOSE 3995
 
 ENTRYPOINT [ "npm", "run", "start:prod" ]
