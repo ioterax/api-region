@@ -1,9 +1,9 @@
-import { ICountry } from "@atisiothings/laniakea-lib-central/dist/domain/region";
-import { CrudUseCase } from "./core/crud.usecase";
-import { ViewUseCase } from "./core/view.usecase";
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+import { ICountry } from '@ioterax/laniakea-lib-central';
+import { CrudUseCase, ViewUseCase } from '@ioterax/laniakea-lib-core';
 
-export interface CountryCrudUseCase extends CrudUseCase<ICountry, String> {}
+export interface CountryCrudUseCase extends CrudUseCase<ICountry, string> {}
 export const CountryCrudUseCase = Symbol('CountryCrudUseCase');
 
-export interface CountryViewUseCase extends ViewUseCase<ICountry, String> {}
+export interface CountryViewUseCase extends ViewUseCase<ICountry, string> {}
 export const CountryViewUseCase = Symbol('CountryViewUseCase');

@@ -1,32 +1,30 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from '@/app.module';
-import { VersioningType } from '@nestjs/common';
-import { setupB2CSwagger } from './api/swagger/api-b2c.config';
+import {
+  bootstrapMicroservice,
+  SiloCtxEnum,
+} from '@ioterax/laniakea-lib-bootstrap';
+import { AppModule } from './app.module';
 import { setupB2BSwagger } from './api/swagger/api-b2b.config';
+import {
+  CustomExceptionFilter,
+  DomainExceptionFilter,
+} from '@ioterax/laniakea-lib-commons';
 
 const banner = `
-██████  ███████  ██████  ██  ██████  ███    ██      █████  ██████  ██ 
-██   ██ ██      ██       ██ ██    ██ ████   ██     ██   ██ ██   ██ ██ 
-██████  █████   ██   ███ ██ ██    ██ ██ ██  ██     ███████ ██████  ██ 
-██   ██ ██      ██    ██ ██ ██    ██ ██  ██ ██     ██   ██ ██      ██ 
-██   ██ ███████  ██████  ██  ██████  ██   ████     ██   ██ ██      ██ 
+          ▄▖    ▖▖      ▄▖▄▖▄▖▄▖▄▖▖ ▖  ▄▖▄▖▄▖▖▖▄▖▄▖▄▖
+▛▌▀▌▀▌▛▘  ▙▖▛▘▀▌▚▘  ▄▖  ▙▘▙▖▌ ▐ ▌▌▛▖▌  ▚ ▙▖▙▘▌▌▐ ▌ ▙▖
+▙▌█▌█▌▄▌▗ ▙▖▌ █▌▌▌      ▌▌▙▖▙▌▟▖▙▌▌▝▌  ▄▌▙▖▌▌▚▘▟▖▙▖▙▖
+▌
 `;
 
-console.log(banner);
-
-async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-
-  // Versioning
-  app.enableVersioning({
-    type: VersioningType.URI,
-  });
-
-  // Api
-  setupB2BSwagger(app);
-  setupB2CSwagger(app);
-
-  await app.listen(parseInt(process.env.PORT as string, 10) || 3000);
-}
-
-bootstrap();
+bootstrapMicroservice({
+  appModule: AppModule,
+  serviceName: 'Region API',
+  banner,
+  port: Number(process.env.LISTEN_PORT),
+  filters: [CustomExceptionFilter, DomainExceptionFilter],
+  swagger: [setupB2BSwagger],
+  siloContext: (process.env.SILO_CTX ?? '')
+    .split(',')
+    .map((v) => v.trim())
+    .filter((v) => v.length > 0) as SiloCtxEnum[],
+});

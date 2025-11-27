@@ -1,6 +1,6 @@
-import { State } from "@/framework/repository/mongodb/schemas/state.schema";
-import { CrudUseCase } from "./core/crud.usecase";
+/* eslint-disable @typescript-eslint/no-empty-object-type */
+import { IState } from '@ioterax/laniakea-lib-central';
+import { CrudUseCase } from '@ioterax/laniakea-lib-core';
 
-export interface StateUseCase extends CrudUseCase<State, String> {}
-
+export interface StateUseCase extends CrudUseCase<IState, string> {}
 export const StateUseCase = Symbol('StateUseCase');

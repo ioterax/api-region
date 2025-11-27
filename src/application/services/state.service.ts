@@ -1,34 +1,37 @@
 import { Inject, Injectable } from '@nestjs/common';
-
+import { IState } from '@ioterax/laniakea-lib-central';
 import { StateUseCase } from '../usescases/state.usecase';
-import { StateOutPort } from '../ports/out/state.out.port';
-import { State } from '@/framework/repository/mongodb/schemas/state.schema';
-import { DomainInvalidException } from '@/exceptions/domain.exception';
+import { StateOutPort } from '../ports/out/state.port';
 
 @Injectable()
 export class StateService implements StateUseCase {
+  constructor(
+    @Inject(StateOutPort)
+    private readonly stateOutPort: StateOutPort,
+  ) {}
 
-  constructor(@Inject(StateOutPort) private readonly stateOutPort: StateOutPort) {}
-
-  registerNew(domain: State): Promise<State> {
+  // CREATE
+  registerNew(domain: IState): Promise<IState> {
     return this.stateOutPort.save(domain);
   }
 
-  retrieveAll(): Promise<State[]> {
-    // throw new DomainInvalidException('DOMAIN NOT IMPLEMENTED');
+  // RETRIEVE ALL
+  retrieveAll(): Promise<IState[]> {
     return this.stateOutPort.findAll();
   }
 
-  retrieveOne(id: String): Promise<State | null> {
+  // RETRIEVE ONE
+  retrieveOne(id: string): Promise<IState | null> {
     return this.stateOutPort.findById(id);
   }
 
-  updateOne(id: String, domain: State): Promise<State | null> {
+  // UPDATE
+  updateOne(id: string, domain: IState): Promise<IState | null> {
     return this.stateOutPort.updateById(id, domain);
   }
 
-  removeOne(id: String) {
+  // DELETE
+  removeOne(id: string): Promise<void> {
     return this.stateOutPort.deleteById(id);
   }
-
 }

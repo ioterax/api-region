@@ -1,34 +1,56 @@
-import { StateInPort } from "@/application/ports/in/state.in.port";
-import { StateUseCase } from "@/application/usescases/state.usecase";
-import { IState } from "@atisiothings/laniakea-lib-central/dist/domain/region";
-import { Injectable, Inject } from "@nestjs/common";
+import { IState } from '@ioterax/laniakea-lib-central/dist/domain/region';
+import { StateInPort } from '@/application/ports/in/state.port';
+import { StateUseCase } from '@/application/usescases/state.usecase';
+import { Injectable, Inject } from '@nestjs/common';
 
 @Injectable()
 export class StateRestAdapter implements StateInPort {
+  constructor(
+    @Inject(StateUseCase)
+    private readonly stateUseCase: StateUseCase,
+  ) {}
 
-    constructor(
-        @Inject(StateUseCase) private readonly stateUseCase: StateUseCase
-    ) {}
+  // -------------------------------------------------------------
+  // CREATE
+  // -------------------------------------------------------------
+  handleToRegister(state: Partial<IState>): Promise<Partial<IState>> {
+    // return this.stateUseCase.registerNew(state);
+    throw new Error('Method not implemented.');
+  }
 
-    handleToRegister(state: IState): Promise<IState> {
-        return this.stateUseCase.registerNew(state)
-    }
+  // -------------------------------------------------------------
+  // FIND ALL
+  // -------------------------------------------------------------
+  handleFindAll(): Promise<Partial<IState>[]> {
+    // return this.stateUseCase.retrieveAll();
+    throw new Error('Method not implemented.');
+  }
 
-    handleFindAll(): Promise<IState[]> {
-      return this.stateUseCase.retrieveAll();
-    }
+  // -------------------------------------------------------------
+  // FIND ONE
+  // -------------------------------------------------------------
+  handleFindOne(id: string): Promise<Partial<IState> | null> {
+    // return this.stateUseCase.retrieveOne(id);
+    throw new Error('Method not implemented.');
+  }
 
-    handleFindOne(id: String): Promise<IState | null> {
-      return this.stateUseCase.retrieveOne(id);
-    }
-  
-    handleUpdateOne(id: String, state: IState) {
-      return this.stateUseCase.updateOne(id, state);
-    }
-  
-    handleRemoveOne(id: String) {
-      console.log(`id: ${id}`)
-        this.stateUseCase.removeOne(id);
-    }
+  // -------------------------------------------------------------
+  // UPDATE
+  // -------------------------------------------------------------
+  handleUpdateOne(
+    id: string,
+    state: Partial<IState>,
+  ): Promise<Partial<IState> | null> {
+    // return this.stateUseCase.updateOne(id, state);
+    throw new Error('Method not implemented.');
+  }
 
+  // -------------------------------------------------------------
+  // DELETE
+  // -------------------------------------------------------------
+  handleRemoveOne(id: string): Promise<void> {
+    console.log(`id: ${id}`);
+    // return this.stateUseCase.removeOne(id);
+    throw new Error('Method not implemented.');
+  }
 }

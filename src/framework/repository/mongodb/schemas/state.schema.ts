@@ -1,28 +1,62 @@
-
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Schema as MongooseSchema } from 'mongoose';
 import { Country } from './country.schema';
-import { ICountry, IState } from '@atisiothings/laniakea-lib-central/dist/central';
+import { ICountry, IState } from '@ioterax/laniakea-lib-central';
 
 export type StateDocumentType = HydratedDocument<State>;
 
 @Schema({ collection: 'states' })
 export class State implements IState {
-    _id: string;
-    @Prop()    
-    name: string;
-    @Prop()
-    areaCode: number;
-    @Prop()
-    hasDST: boolean;
-    @Prop()
-    createdOn: Date;
-    @Prop()
-    changedOn: Date;
-    @Prop()
-    signature: string;
-    @Prop({ type: MongooseSchema.Types.ObjectId, ref: Country.name })
-    country: ICountry;
+  id: string;
+
+  @Prop()
+  code: string;
+
+  @Prop()
+  name: string;
+
+  @Prop()
+  areaCode: number;
+
+  @Prop()
+  hasDST: boolean;
+
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: Country.name })
+  country: ICountry;
+
+  /**
+   * @property {Date} createdAt - Timestamp when the client was created.
+   */
+  @Prop({
+    required: true,
+    index: true,
+    unique: true,
+    default: () => new Date().toISOString(),
+  })
+  createdAt!: Date;
+
+  /**
+   * @property {Date} changedAt - Timestamp of the last modification to the client.
+   */
+  @Prop({
+    required: true,
+    index: true,
+    unique: true,
+    default: () => new Date().toISOString(),
+  })
+  changedAt!: Date;
+
+  @Prop({ required: true, default: () => new Date().toISOString() })
+  updatedAt!: Date;
+
+  @Prop({ type: Date, required: false, default: null })
+  revokedAt?: Date | null;
+
+  /**
+   * @property {string} signature - Unique signature hash for the client.
+   */
+  @Prop({ required: true })
+  signature!: string;
 }
 
 export const StateSchema = SchemaFactory.createForClass(State);

@@ -1,24 +1,26 @@
-import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import { APP_GUARD } from '@nestjs/core';
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
+import {
+  CorsMiddleware,
+  HealthController,
+} from '@ioterax/laniakea-lib-sec-comm';
+import { AuthModule } from '@ioterax/laniakea-lib-auth';
+import {
+  CustomExceptionFilter,
+  DomainExceptionFilter,
+} from '@ioterax/laniakea-lib-commons';
 
-import { LoggerModule, AppLogger } from '@atisiothings/laniakea-lib-audit';
-import { AuthClientModule } from '@atisiothings/laniakea-lib-http/dist/modules/auth.module';
-import { AuthGuard } from '@/security/auth.guard';
 import { CountryModule } from '@/modules/country.module';
 import { StateModule } from './modules/state.module';
 
 @Module({
-  imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
-    LoggerModule.forRoot({ level: 'debug' }),
-    AuthClientModule.forRoot('localhost:50051'),
-    CountryModule,
-    StateModule,
-  ],
-  providers: [AppLogger, { provide: APP_GUARD, useClass: AuthGuard }],
-  exports: [
-    // AppLogger,
-  ]
+  imports: [AuthModule.forRoot(), CountryModule, StateModule],
+  controllers: [HealthController],
+  providers: [CustomExceptionFilter, DomainExceptionFilter],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(CorsMiddleware)
+      .forRoutes({ path: '/*prefix/region', method: RequestMethod.ALL });
+  }
+}
