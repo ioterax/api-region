@@ -21,9 +21,14 @@ import { CountryController } from '@/framework/controller/country.controller';
 import { DynamicDatabaseModule } from '@ioterax/laniakea-lib-database';
 import { countryConfig } from '@/framework/repository/database.config';
 import { AppLogger } from '@ioterax/laniakea-lib-audit';
+import { MapperModule } from '@ioterax/laniakea-lib-mapper';
+import { CountryMapper } from '@/adapters/mappers/country.mapper';
 
 @Module({
-  imports: [DynamicDatabaseModule.forFeature(countryConfig)],
+  imports: [
+    MapperModule.register([CountryMapper]),
+    DynamicDatabaseModule.forFeature(countryConfig),
+  ],
   controllers: [CountryController],
   providers: [
     AppLogger,

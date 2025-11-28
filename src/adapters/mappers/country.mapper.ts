@@ -1,26 +1,18 @@
-// import { ICountry } from "@atisiothings/laniakea-lib-central/dist/domain/region";
-// import { CountryDto } from "../dtos/country.dto";
-// import { setTrace } from "@/common/common";
+import { MapperFor, GenericMapper } from '@ioterax/laniakea-lib-mapper';
+import { Country } from '@/framework/controller/models/country.model';
+import { ICountry } from '@ioterax/laniakea-lib-central';
 
-// export class CountryMapper {
-//     static toDomain(dto: CountryDto, isNew: boolean = false): ICountry {
-//       let country: ICountry = {
-//         code: dto.code,
-//         name: dto.name,
-//         mcc: dto.mcc,
-//         language: dto.language,
-//         initials: dto.initials,
-//       };
-//       return setTrace(country, isNew);
-//     }
-  
-//     static toDto(domain: ICountry): CountryDto {
-//       return {
-//         code: domain.code,
-//         name: domain.name,
-//         mcc: domain.mcc,
-//         language: domain.language,
-//         initials: domain.initials,
-//       };
-//     }
-//   }
+@MapperFor(Country)
+export class CountryMapper extends GenericMapper<ICountry, Country> {
+  constructor() {
+    super(Country, {
+      beforeTransform: (entity) => ({
+        ...entity,
+      }),
+
+      presets: {
+        list: ['code', 'name'],
+      },
+    });
+  }
+}

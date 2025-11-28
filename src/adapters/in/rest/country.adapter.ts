@@ -6,15 +6,18 @@ import {
   CountryCrudUseCase,
   CountryViewUseCase,
 } from '@/application/usescases/country.usecase';
+import { Country } from '@/framework/controller/models/country.model';
+import { CountryMapper } from '@/adapters/mappers/country.mapper';
 
 @Injectable()
-export class CountryRestInAdapter implements CountryInPort<Partial<ICountry>> {
+export class CountryRestInAdapter implements CountryInPort<Partial<Country>> {
   constructor(
     @Inject(AppLogger) private readonly logger: AppLogger,
     @Inject(CountryCrudUseCase)
     private readonly crudUseCase: CountryCrudUseCase,
     @Inject(CountryViewUseCase)
     private readonly viewUseCase: CountryViewUseCase,
+    private readonly mapper: CountryMapper,
   ) {}
 
   // -------------------------------------------------------------
@@ -28,8 +31,9 @@ export class CountryRestInAdapter implements CountryInPort<Partial<ICountry>> {
   // -------------------------------------------------------------
   // READ ALL
   // -------------------------------------------------------------
-  handleFindAll(): Promise<ICountry[]> {
-    return this.crudUseCase.retrieveAll();
+  async handleFindAll(): Promise<Partial<Country>[]> {
+    const countries = await this.crudUseCase.retrieveAll();
+    return this.mapper.toList(countries);
   }
 
   // -------------------------------------------------------------

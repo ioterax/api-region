@@ -1,5 +1,5 @@
 {
-  "name": "laniakea-mcs-region", 
+  "name": "laniakea-mcs-region",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -21,10 +21,11 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@atisiothings/laniakea-lib-central": "^0.0.61",
-    "@atisiothings/laniakea-lib-database": "^0.0.8",
-    "@atisiothings/laniakea-lib-http": "^0.0.55",
-    "@atisiothings/laniakea-lib-audit": "^0.0.9",
+    "@ioterax/laniakea-lib-central": "^0.0.61",
+    "@ioterax/laniakea-lib-database": "^0.0.8",
+    "@ioterax/laniakea-lib-http": "^0.0.55",
+    "@ioterax/laniakea-lib-audit": "^0.0.9",
+    "@ioterax/laniakea-lib-mapper": "0.0.0-local.4",
     "@grpc/grpc-js": "^1.11.3",
     "@nestjs/common": "^10.3.10",
     "@nestjs/config": "^3.2.3",
