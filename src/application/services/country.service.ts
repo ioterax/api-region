@@ -1,48 +1,46 @@
+/* eslint-disable @typescript-eslint/no-empty-object-type */
 import { Inject, Injectable } from '@nestjs/common';
 
-import { ICountry } from '@atisiothings/laniakea-lib-central/dist/domain/region';
+import { ICountry } from '@ioterax/foundation-lib-central';
 import { CountryCrudUseCase, CountryViewUseCase } from '@/application/usescases/country.usecase';
-import { CountryOutPort } from '@/application/ports/out/country.out.port';
+import { CountryOutPort } from '@/application/ports/out/country.port';
 
 @Injectable()
 export class CountryService implements CountryCrudUseCase {
-
   constructor(@Inject(CountryOutPort) private readonly countryOutPort: CountryOutPort) {}
 
-  registerNew(country: ICountry): Promise<ICountry> {
+  async registerNew(domain: ICountry): Promise<ICountry> {
     // add validation
-    return this.countryOutPort.save(country);
+    return await this.countryOutPort.save(domain);
   }
 
-  retrieveAll(): Promise<ICountry[]> {
-    return this.countryOutPort.findAll();
+  async retrieveAll(): Promise<ICountry[]> {
+    return await this.countryOutPort.findAll();
   }
 
-  retrieveOne(id: String): Promise<ICountry | null> {
-      return this.countryOutPort.findById(id);
+  async retrieveOne(id: string): Promise<ICountry | null> {
+    return await this.countryOutPort.findById(id);
   }
 
-  updateOne(id: String, country: ICountry): Promise<ICountry | null> {
-    return this.countryOutPort.updateById(id, country);
+  async updateOne(id: string, domain: ICountry): Promise<ICountry | null> {
+    return await this.countryOutPort.updateById(id, domain);
   }
 
-  removeOne(id: String) {
-    this.countryOutPort.deleteById(id);
+  async removeOne(id: string): Promise<void> {
+    await this.countryOutPort.deleteById(id);
   }
 }
 
 @Injectable()
 export class CountryViewService implements CountryViewUseCase {
-
   constructor(@Inject(CountryOutPort) private readonly countryOutPort: CountryOutPort) {}
 
-  retrieveAll(project: {} | ICountry): Promise<ICountry[]> {
-    return this.countryOutPort.findAll(project);
+  async retrieveAll(project: {} | ICountry): Promise<ICountry[]> {
+    return await this.countryOutPort.findAll(project);
   }
 
-  retrieveOne(id: String, project: ICountry | {}): Promise<ICountry | null> {
+  async retrieveOne(id: string, project: ICountry | {}): Promise<ICountry | null> {
     console.log(project);
-    return this.countryOutPort.findById(id, project);
+    return await this.countryOutPort.findById(id, project);
   }
-
 }

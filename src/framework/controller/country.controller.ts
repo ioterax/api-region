@@ -1,18 +1,9 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Inject,
-  Param,
-  Post,
-  Put,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Inject, Param, Post, Put } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-
-import { ICountry } from '@atisiothings/laniakea-lib-central/dist/central';
-import { CountryInPort } from '@/application/ports/in/country.in.port';
-// import { Public } from '@atisiothings/laniakea-lib-http/dist/security/auth.guard';
+import { EnterpriseOnly, Permission, RegionCountryPermissions } from '@ioterax/security-lib-auth';
+import { ICountry } from '@ioterax/foundation-lib-central';
+import { CountryInPort } from '@/application/ports/in/country.port';
+import { Country } from './models/country.model';
 
 /**
  * Controller that handles HTTP requests for Country-related operations.
@@ -32,7 +23,7 @@ export class CountryController {
    *
    * @param countryInPort - The application service handling Country operations.
    */
-  constructor(@Inject(CountryInPort) private countryInPort: CountryInPort) {}
+  constructor(@Inject(CountryInPort) private countryInPort: CountryInPort<Country>) {}
 
   /**
    * Handles the creation of a new Country entity.
@@ -40,8 +31,10 @@ export class CountryController {
    * @param country - The Country entity to be created.
    * @returns The result of the creation operation.
    */
+  @EnterpriseOnly()
+  @Permission(RegionCountryPermissions.MANAGE_CREATE)
   @Post('/op')
-  create(@Body() country: ICountry) {
+  create(@Body() country: Country) {
     return this.countryInPort.handleToRegister(country);
   }
 
@@ -50,10 +43,11 @@ export class CountryController {
    *
    * @returns A promise that resolves to an array of Country entities.
    */
-  // @Public()
+  @EnterpriseOnly()
+  @Permission(RegionCountryPermissions.MANAGE_LIST)
   @Get('/op')
-  list(): Promise<ICountry[]> {
-    return this.countryInPort.handleFindAll();
+  async list(): Promise<Country[]> {
+    return await this.countryInPort.handleFindAll();
   }
 
   /**
@@ -62,40 +56,47 @@ export class CountryController {
    * @param id - The ID of the Country entity to retrieve.
    * @returns A promise that resolves to the found Country entity or null if not found.
    */
+  @EnterpriseOnly()
+  @Permission(RegionCountryPermissions.MANAGE_GET)
   @Get('/op/:id')
-  get(@Param('id') id: String): Promise<ICountry | null> {
+  get(@Param('id') id: string): Promise<Country | null> {
     return this.countryInPort.handleFindOne(id);
   }
 
   /**
    * Updates an existing Country entity by its ID.
-   * 
+   *
    * @param id - The ID of the Country entity to update.
    * @param country - The new data for the Country entity.
    * @returns The result of the update operation.
    */
+  @EnterpriseOnly()
+  @Permission(RegionCountryPermissions.MANAGE_UPDATE)
   @Put('/op/:id')
-  update(@Param('id') id: String, @Body() country: ICountry) {
+  update(@Param('id') id: string, @Body() country: Country) {
     return this.countryInPort.handleUpdateOne(id, country);
   }
 
   /**
    * Deletes a Country entity by its ID.
-   * 
+   *
    * @param id - The ID of the Country entity to delete.
    * @returns A void promise that resolves when the deletion operation is complete.
    */
+  @EnterpriseOnly()
+  @Permission(RegionCountryPermissions.MANAGE_DELETE)
   @Delete('/op/:id')
-  delete(@Param('id') id: String): Promise<void> {
+  async delete(@Param('id') id: string): Promise<void> {
     console.log(`id: ${id}`);
-    return this.countryInPort.handleRemoveOne(id);
+    await this.countryInPort.handleRemoveOne(id);
   }
 
   /**
    * Retrieves a simplified view list of all Country entities.
-   * 
+   *
    * @returns A promise that resolves to an array of simplified view Country entities.
    */
+  @Permission(RegionCountryPermissions.VIEW_LIST)
   @Get('/vw')
   listView(): Promise<ICountry[]> {
     return this.countryInPort.handleSimpleViewFindAll();
@@ -103,12 +104,13 @@ export class CountryController {
 
   /**
    * Retrieves a simplified view of a single Country entity by its ID.
-   * 
+   *
    * @param id - The ID of the Country entity to retrieve.
    * @returns A promise that resolves to the simplified view of the found Country entity or null if not found.
    */
+  @Permission(RegionCountryPermissions.VIEW_GET)
   @Get('/vw/:id')
-  getView(@Param('id') id: String): Promise<ICountry | null> {
+  getView(@Param('id') id: string): Promise<ICountry | null> {
     return this.countryInPort.handleSimpleViewFindOne(id);
   }
 }

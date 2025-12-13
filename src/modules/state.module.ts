@@ -1,31 +1,19 @@
 import { Module } from '@nestjs/common';
-// import { MongooseModule } from '@nestjs/mongoose';
+import { DynamicDatabaseModule } from '@ioterax/infra-lib-database';
 
-// Adapter In
 import { StateRestAdapter } from '@/adapters/in/rest/state.rest.adapter';
-
-// Application Service
 import { StateUseCase } from '@/application/usescases/state.usecase';
 import { StateService } from '@/application/services/state.service';
-
-// Application Ports
-import { StateInPort } from '@/application/ports/in/state.in.port';
-
-// Framework
+import { StateInPort } from '@/application/ports/in/state.port';
 import { StateController } from '@/framework/controller/state.controller';
-import { DynamicDatabaseModule } from "@atisiothings/laniakea-lib-database/dist/module/context.module";
-import { stateConfig } from '@/framework/repository/database.config';
+import { regionConfig } from '@/framework/repository/database.config';
 
 @Module({
-  imports: [
-    DynamicDatabaseModule.forFeature(stateConfig),
-  ],
-  controllers: [
-    StateController
-  ],
+  imports: [DynamicDatabaseModule.forFeature(regionConfig)],
+  controllers: [StateController],
   providers: [
     { provide: StateInPort, useClass: StateRestAdapter }, // => provide Adapter In [rest >> app >> db]
-    { provide: StateUseCase, useClass: StateService },    // => provide Application Service
+    { provide: StateUseCase, useClass: StateService }, // => provide Application Service
   ],
 })
 export class StateModule {}
