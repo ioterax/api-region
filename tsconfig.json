@@ -1,25 +1,43 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "declaration": true,
-    "removeComments": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "target": "ES2020",
-    "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
-    "paths": { 
-      "@/*": ["src/*"],
-      "@Helper/*": ["src/common/helper/*"]
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": [
+        "*"
+      ],
+      "@Helper/*": [
+        "src/common/helper/*"
+      ]
     },
-    "incremental": true,
-    "skipLibCheck": true,
-    "strictNullChecks": true,
+    "alwaysStrict": true,
+    "strict": true,
+    "noFallthroughCasesInSwitch": true,
     "noImplicitAny": false,
     "strictBindCallApply": true,
+    "strictNullChecks": true,
+    "declaration": true,
+    "declarationMap": true,
+    "removeComments": true,
+    "sourceMap": true,
+    "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": true
-  }
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "ES2020",
+    "incremental": true,
+    "skipLibCheck": true,
+    "listEmittedFiles": true,
+    "esModuleInterop": true,
+    // 🔧 ESSENCIAIS PARA COMMONJS
+    "module": "CommonJS"
+    // "moduleResolution": "node"
+  },
+  "include": [
+    "src/**/*.ts",
+  ],
+  "exclude": [
+    "node_modules",
+    "./**/*.spec.ts"
+  ]
 }

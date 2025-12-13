@@ -4,18 +4,17 @@ import { ApiOperation, ApiResponse, ApiBody, ApiParam } from '@nestjs/swagger';
 /**
  * CountryApiEndpoint is a utility class that provides static methods
  * to apply OpenAPI annotations to the CountryController methods.
- * 
+ *
  * These methods encapsulate the OpenAPI decorators, making it easier to
  * maintain and apply the annotations in a clean and modular way.
  */
 export class CountryApiEndpoint {
-
   /**
    * Applies OpenAPI decorators for creating a new Country entity.
-   * 
-   * This method includes operation summary, response schemas for 
+   *
+   * This method includes operation summary, response schemas for
    * success and error cases, and a request body schema.
-   * 
+   *
    * @returns A set of decorators to be applied to the controller method.
    */
   static create() {
@@ -56,10 +55,10 @@ export class CountryApiEndpoint {
 
   /**
    * Applies OpenAPI decorators for retrieving a list of all Country entities.
-   * 
+   *
    * This method includes operation summary and response schema for
    * the successful retrieval of the list of countries.
-   * 
+   *
    * @returns A set of decorators to be applied to the controller method.
    */
   static list() {
@@ -82,10 +81,10 @@ export class CountryApiEndpoint {
 
   /**
    * Applies OpenAPI decorators for retrieving a single Country entity by ID.
-   * 
+   *
    * This method includes operation summary, path parameter, and response schemas
    * for successful and error cases.
-   * 
+   *
    * @returns A set of decorators to be applied to the controller method.
    */
   static get() {
@@ -126,10 +125,10 @@ export class CountryApiEndpoint {
 
   /**
    * Applies OpenAPI decorators for updating an existing Country entity by ID.
-   * 
+   *
    * This method includes operation summary, path parameter, response schemas for
    * success and error cases, and a request body schema.
-   * 
+   *
    * @returns A set of decorators to be applied to the controller method.
    */
   static update() {
@@ -189,10 +188,10 @@ export class CountryApiEndpoint {
 
   /**
    * Applies OpenAPI decorators for deleting a Country entity by ID.
-   * 
+   *
    * This method includes operation summary, path parameter, and response schemas
    * for success and error cases.
-   * 
+   *
    * @returns A set of decorators to be applied to the controller method.
    */
   static delete() {

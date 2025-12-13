@@ -1,7 +1,7 @@
-import { IState } from '@ioterax/laniakea-lib-central/dist/domain/region';
+import { Injectable, Inject } from '@nestjs/common';
+import { IState } from '@ioterax/foundation-lib-central';
 import { StateInPort } from '@/application/ports/in/state.port';
 import { StateUseCase } from '@/application/usescases/state.usecase';
-import { Injectable, Inject } from '@nestjs/common';
 
 @Injectable()
 export class StateRestAdapter implements StateInPort {
@@ -37,10 +37,7 @@ export class StateRestAdapter implements StateInPort {
   // -------------------------------------------------------------
   // UPDATE
   // -------------------------------------------------------------
-  handleUpdateOne(
-    id: string,
-    state: Partial<IState>,
-  ): Promise<Partial<IState> | null> {
+  handleUpdateOne(id: string, state: Partial<IState>): Promise<Partial<IState> | null> {
     // return this.stateUseCase.updateOne(id, state);
     throw new Error('Method not implemented.');
   }

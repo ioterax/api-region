@@ -1,26 +1,22 @@
 import { CountryOutPort } from '@/application/ports/out/country.port';
-import { SiloCtxEnum } from '@ioterax/laniakea-lib-bootstrap';
-import { DatabaseConfigOptions } from '@ioterax/laniakea-lib-database';
+import { SiloCtxEnum } from '@ioterax/bootstrap-lib-starter';
+import { DatabaseConfigOptions } from '@ioterax/infra-lib-database';
 import { StateOutPort } from '@/application/ports/out/state.port';
 import { CountryMongoDbRepository } from './mongodb/country.repository';
 import { Country, CountrySchema } from './mongodb/schemas/country.schema';
 import { State, StateSchema } from './mongodb/schemas/state.schema';
 import { StateMongoRepository } from './mongodb/state.repository';
 
-export const countryConfig: DatabaseConfigOptions = {
+export const regionConfig: DatabaseConfigOptions = {
   connectName: process.env.MONGO_REGION_CN_NAME as string,
   dbName: `${SiloCtxEnum.FOUNDATION}_generic`.toLowerCase(),
   dbType: process.env.DATABASE_TYPE as string,
-  models: [{ name: Country.name, schema: CountrySchema }],
+  models: [
+    { name: Country.name, schema: CountrySchema },
+    { name: State.name, schema: StateSchema },
+  ],
   outPortProviders: [
     { provide: CountryOutPort, useClass: CountryMongoDbRepository },
+    { provide: StateOutPort, useClass: StateMongoRepository },
   ],
-};
-
-export const stateConfig: DatabaseConfigOptions = {
-  connectName: process.env.MONGO_REGION_CN_NAME as string,
-  dbName: `${SiloCtxEnum.FOUNDATION}_generic`.toLowerCase(),
-  dbType: process.env.DATABASE_TYPE as string,
-  models: [{ name: State.name, schema: StateSchema }],
-  outPortProviders: [{ provide: StateOutPort, useClass: StateMongoRepository }],
 };

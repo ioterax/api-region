@@ -1,9 +1,8 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-
+import { IState } from '@ioterax/foundation-lib-central';
 import { StateOutPort } from '@/application/ports/out/state.port';
-import { IState } from '@ioterax/laniakea-lib-central';
 import { State } from './schemas/state.schema';
 
 export class StateMongoRepository implements StateOutPort {
@@ -35,29 +34,33 @@ export class StateMongoRepository implements StateOutPort {
       .exec();
   }
 
-  async findById(id: string, project?: {}): Promise<IState | null> {
-    console.log('getState');
-    return this.domainModel
-      .aggregate([
-        { $match: { _id: id } },
-        {
-          $lookup: {
-            from: 'countries',
-            localField: 'country',
-            foreignField: '_id',
-            as: 'country',
-          },
+  async findById(id: string, project?: Record<string, 0 | 1>): Promise<IState | null> {
+    const pipeline: any[] = [
+      { $match: { _id: id } },
+      {
+        $lookup: {
+          from: 'countries',
+          localField: 'country',
+          foreignField: '_id',
+          as: 'country',
         },
-        { $unwind: { path: '$country', preserveNullAndEmptyArrays: true } },
-      ])
-      .exec()[0];
+      },
+      { $unwind: { path: '$country', preserveNullAndEmptyArrays: true } },
+    ];
+
+    // ✅ Optional projection
+    if (project && Object.keys(project).length > 0) {
+      pipeline.push({ $project: project });
+    }
+
+    const result = await this.domainModel.aggregate(pipeline).exec();
+
+    return result[0] ?? null;
   }
 
   async updateById(id: string, domain: State): Promise<State | null> {
     const filter = { _id: id };
-    return await this.domainModel
-      .findByIdAndUpdate(filter, { ...domain }, { new: true })
-      .exec();
+    return await this.domainModel.findByIdAndUpdate(filter, { ...domain }, { new: true }).exec();
   }
 
   async deleteById(id: string) {

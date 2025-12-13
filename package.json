@@ -1,10 +1,20 @@
 {
-  "name": "laniakea-mcs-region",
+  "name": "@ioterax/api-auth",
   "version": "0.0.1",
   "description": "",
-  "author": "",
-  "private": true,
+  "author": {
+    "name": "Adriano Ferreira",
+    "email": "adriano@ioterax.com"
+  },
   "license": "UNLICENSED",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    ".githead"
+  ],
+  "private": true,
+  "packageManager": "yarn@4.11.0",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
@@ -21,12 +31,21 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@ioterax/laniakea-lib-central": "^0.0.61",
-    "@ioterax/laniakea-lib-database": "^0.0.8",
-    "@ioterax/laniakea-lib-http": "^0.0.55",
-    "@ioterax/laniakea-lib-audit": "^0.0.9",
-    "@ioterax/laniakea-lib-mapper": "0.0.0-local.4",
     "@grpc/grpc-js": "^1.11.3",
+    "@ioterax/bootstrap-lib-starter": "< 2.0.0",
+    "@ioterax/foundation-lib-central": "< 2.0.0",
+    "@ioterax/foundation-lib-commons": "< 2.0.0",
+    "@ioterax/foundation-lib-core": "< 2.0.0",
+    "@ioterax/foundation-lib-encode": "< 2.0.0",
+    "@ioterax/infra-lib-connectivity": "< 2.0.0",
+    "@ioterax/infra-lib-database": "< 2.0.0",
+    "@ioterax/infra-lib-mapper": "< 2.0.0",
+    "@ioterax/infra-lib-profiler": "< 2.0.0",
+    "@ioterax/observability-lib-metrics": "< 2.0.0",
+    "@ioterax/security-lib-audit": "< 2.0.0",
+    "@ioterax/security-lib-auth": "< 2.0.0",
+    "@ioterax/security-lib-iam": "< 2.0.0",
+    "@ioterax/security-lib-rbac": "< 2.0.0",
     "@nestjs/common": "^10.3.10",
     "@nestjs/config": "^3.2.3",
     "@nestjs/core": "^10.3.10",

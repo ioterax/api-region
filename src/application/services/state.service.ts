@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { IState } from '@ioterax/laniakea-lib-central';
-import { StateUseCase } from '../usescases/state.usecase';
-import { StateOutPort } from '../ports/out/state.port';
+import { IState } from '@ioterax/foundation-lib-central';
+import { StateUseCase } from '@/application/usescases/state.usecase';
+import { StateOutPort } from '@/application/ports/out/state.port';
 
 @Injectable()
 export class StateService implements StateUseCase {

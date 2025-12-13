@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
-import { ICountry } from '@ioterax/laniakea-lib-central';
-import { CrudUseCase, ViewUseCase } from '@ioterax/laniakea-lib-core';
+import { CrudUseCase, ViewUseCase } from '@ioterax/foundation-lib-core';
+import { ICountry } from '@ioterax/foundation-lib-central';
 
 export interface CountryCrudUseCase extends CrudUseCase<ICountry, string> {}
 export const CountryCrudUseCase = Symbol('CountryCrudUseCase');

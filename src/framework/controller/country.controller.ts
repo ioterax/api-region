@@ -1,18 +1,7 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Inject,
-  Param,
-  Post,
-  Put,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Inject, Param, Post, Put } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-
-import { EnterpriseOnly, Permission } from '@ioterax/laniakea-lib-auth';
-import { RegionCountryPermissions } from '@ioterax/laniakea-lib-auth';
-import { ICountry } from '@ioterax/laniakea-lib-central';
+import { EnterpriseOnly, Permission, RegionCountryPermissions } from '@ioterax/security-lib-auth';
+import { ICountry } from '@ioterax/foundation-lib-central';
 import { CountryInPort } from '@/application/ports/in/country.port';
 import { Country } from './models/country.model';
 
@@ -34,9 +23,7 @@ export class CountryController {
    *
    * @param countryInPort - The application service handling Country operations.
    */
-  constructor(
-    @Inject(CountryInPort) private countryInPort: CountryInPort<Country>,
-  ) {}
+  constructor(@Inject(CountryInPort) private countryInPort: CountryInPort<Country>) {}
 
   /**
    * Handles the creation of a new Country entity.

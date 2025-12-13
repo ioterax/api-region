@@ -21,7 +21,7 @@ export class Country {
   @Expose()
   @IsNotEmpty()
   @IsNumber()
-  code: number;
+  code!: number;
 
   /**
    * @description Official country name.
@@ -34,7 +34,7 @@ export class Country {
   @Expose()
   @IsNotEmpty()
   @IsString()
-  name: string;
+  name!: string;
 
   /**
    * @description Mobile Country Code used in telecommunications.
@@ -47,7 +47,7 @@ export class Country {
   @Expose()
   @IsNotEmpty()
   @IsNumber()
-  mcc: number;
+  mcc!: number;
 
   /**
    * @description Default language for the country.
@@ -60,7 +60,7 @@ export class Country {
   @Expose()
   @IsNotEmpty()
   @IsString()
-  language: string;
+  language!: string;
 
   /**
    * @description ISO alpha-2 or alpha-3 code of the country.
@@ -76,5 +76,5 @@ export class Country {
   @IsNotEmpty()
   @IsString()
   @Length(2, 3)
-  initials: string;
+  initials!: string;
 }

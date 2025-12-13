@@ -2,10 +2,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-
+import { ICountry } from '@ioterax/foundation-lib-central';
 import { CountryOutPort } from '@/application/ports/out/country.port';
 import { Country } from '@/framework/repository/mongodb/schemas/country.schema';
-import { ICountry } from '@ioterax/laniakea-lib-central';
 
 /**
  * Repository implementation for managing Country documents in a MongoDB collection.
@@ -43,16 +42,8 @@ export class CountryMongoDbRepository implements CountryOutPort {
    * @param project - Optional projection of fields to include in the result.
    * @returns A promise that resolves to an array of Country documents.
    */
-  async findAll(
-    query: Partial<ICountry> = {},
-    project: {},
-    limit = 10,
-  ): Promise<ICountry[]> {
-    return this.domainModel
-      .find(query, project)
-      .select(['-__v', '-key'])
-      .limit(limit)
-      .lean();
+  async findAll(query: Partial<ICountry> = {}, project: {}, limit = 10): Promise<ICountry[]> {
+    return this.domainModel.find(query, project).select(['-__v', '-key']).limit(limit).lean();
   }
 
   /**
@@ -62,10 +53,7 @@ export class CountryMongoDbRepository implements CountryOutPort {
    * @returns A promise that resolves to the found Country document, or null if not found.
    */
   async findById(id: string, project?: {}): Promise<ICountry | null> {
-    return this.domainModel
-      .findById(id, project)
-      .select(['-__v', '-key'])
-      .lean();
+    return this.domainModel.findById(id, project).select(['-__v', '-key']).lean();
   }
 
   /**
@@ -78,9 +66,7 @@ export class CountryMongoDbRepository implements CountryOutPort {
     // const e = setTrace(domain);
     const filter = { _id: id };
     // const domainModel = new this.domainModel(e);
-    const x = await this.domainModel
-      .findByIdAndUpdate(filter, { ...domain }, { new: true })
-      .exec();
+    const x = await this.domainModel.findByIdAndUpdate(filter, { ...domain }, { new: true }).exec();
     console.log(`FIX IMPLEMENTATION: >>> x`);
     return x;
   }

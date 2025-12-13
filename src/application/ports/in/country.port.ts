@@ -1,8 +1,7 @@
-import { ICountry } from '@ioterax/laniakea-lib-central';
-import { AdapterHandleCrudInPort } from '@ioterax/laniakea-lib-sec-comm';
+import { AdapterHandleCrudInPort } from '@ioterax/infra-lib-connectivity';
+import { ICountry } from '@ioterax/foundation-lib-central';
 
-export interface CountryInPort<V extends Partial<ICountry>>
-  extends AdapterHandleCrudInPort<V, string> {
+export interface CountryInPort<V extends Partial<ICountry>> extends AdapterHandleCrudInPort<V, string> {
   handleSimpleViewFindAll(): Promise<ICountry[]>;
   handleSimpleViewFindOne(id: string): Promise<ICountry | null>;
 }

@@ -1,28 +1,27 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Schema as MongooseSchema } from 'mongoose';
+import { ICountry, IState } from '@ioterax/foundation-lib-central';
+import { applyDefaultTransform } from '@ioterax/infra-lib-database';
 import { Country } from './country.schema';
-import { ICountry, IState } from '@ioterax/laniakea-lib-central';
-
-export type StateDocumentType = HydratedDocument<State>;
 
 @Schema({ collection: 'states' })
 export class State implements IState {
-  id: string;
+  id!: string;
 
   @Prop()
-  code: string;
+  code!: string;
 
   @Prop()
-  name: string;
+  name!: string;
 
   @Prop()
-  areaCode: number;
+  areaCode!: number;
 
   @Prop()
-  hasDST: boolean;
+  hasDST!: boolean;
 
   @Prop({ type: MongooseSchema.Types.ObjectId, ref: Country.name })
-  country: ICountry;
+  country!: ICountry;
 
   /**
    * @property {Date} createdAt - Timestamp when the client was created.
@@ -59,4 +58,8 @@ export class State implements IState {
   signature!: string;
 }
 
+export type StateDocumentType = HydratedDocument<State>;
 export const StateSchema = SchemaFactory.createForClass(State);
+applyDefaultTransform(StateSchema);
+
+//TODO: CREATE INDEXES IF NEEDED

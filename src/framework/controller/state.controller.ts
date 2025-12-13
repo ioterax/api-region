@@ -1,17 +1,8 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Inject,
-  Param,
-  Post,
-  Put,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Inject, Param, Post, Put } from '@nestjs/common';
 import { State } from '@/framework/repository/mongodb/schemas/state.schema';
 import { ApiTags } from '@nestjs/swagger';
 import { StateInPort } from '@/application/ports/in/state.port';
-import { Permission } from '@ioterax/laniakea-lib-auth';
+import { Permission } from '@ioterax/security-lib-auth';
 
 @ApiTags('State Endpoints')
 @Controller('/region/state')
