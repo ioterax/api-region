@@ -9,8 +9,7 @@ import { StateMongoRepository } from './mongodb/state.repository';
 
 export const regionConfig: DatabaseConfigOptions = {
   connectName: process.env.MONGO_REGION_CN_NAME as string,
-  dbName: `${SiloCtxEnum.FOUNDATION}_generic`.toLowerCase(),
-  dbType: process.env.DATABASE_TYPE as string,
+  dbType: 'mongodb',
   models: [
     { name: Country.name, schema: CountrySchema },
     { name: State.name, schema: StateSchema },
