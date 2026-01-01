@@ -56,8 +56,8 @@ export class CountryController {
    * @param id - The ID of the Country entity to retrieve.
    * @returns A promise that resolves to the found Country entity or null if not found.
    */
-  @EnterpriseOnly()
-  @Permission(RegionCountryPermissions.MANAGE_GET)
+  // @EnterpriseOnly()
+  // @Permission(RegionCountryPermissions.MANAGE_GET)
   @Get('/op/:id')
   get(@Param('id') id: string): Promise<Country | null> {
     return this.countryInPort.handleFindOne(id);

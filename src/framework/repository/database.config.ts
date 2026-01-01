@@ -1,5 +1,4 @@
 import { CountryOutPort } from '@/application/ports/out/country.port';
-import { SiloCtxEnum } from '@ioterax/bootstrap-lib-starter';
 import { DatabaseConfigOptions } from '@ioterax/infra-lib-database';
 import { StateOutPort } from '@/application/ports/out/state.port';
 import { CountryMongoDbRepository } from './mongodb/country.repository';

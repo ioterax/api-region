@@ -418,7 +418,7 @@ __metadata:
   dependencies:
     "@ioterax/bootstrap-lib-starter": "npm:<1.0.0"
     "@ioterax/foundation-lib-central": "npm:<1.0.0"
-    "@ioterax/foundation-lib-commons": "npm:<1.0.0"
+    "@ioterax/foundation-lib-commons": "npm:^0.0.2"
     "@ioterax/foundation-lib-core": "npm:<1.0.0"
     "@ioterax/infra-lib-cache": "npm:<1.0.0"
     "@ioterax/infra-lib-connectivity": "npm:<1.0.0"
@@ -427,7 +427,7 @@ __metadata:
     "@ioterax/infra-lib-profiler": "npm:<1.0.0"
     "@ioterax/observability-lib-metrics": "npm:<1.0.0"
     "@ioterax/security-lib-audit": "npm:<1.0.0"
-    "@ioterax/security-lib-auth": "npm:<1.0.0"
+    "@ioterax/security-lib-auth": "npm:^0.0.2"
     "@ioterax/security-lib-iam": "npm:<1.0.0"
     "@nestjs/cli": "npm:^11.0.14"
     "@nestjs/common": "npm:^11.1.10"
@@ -503,9 +503,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ioterax/foundation-lib-commons@npm:<1.0.0":
-  version: 0.0.1
-  resolution: "@ioterax/foundation-lib-commons@npm:0.0.1"
+"@ioterax/foundation-lib-commons@npm:^0.0.2":
+  version: 0.0.2
+  resolution: "@ioterax/foundation-lib-commons@npm:0.0.2"
   peerDependencies:
     "@ioterax/foundation-lib-core": ^0.0.1
     "@nestjs/common": ^11.1.10
@@ -519,7 +519,7 @@ __metadata:
     nestjs-i18n: ^10.6.0
     reflect-metadata: ^0.2.2
     rxjs: ^7.8.2
-  checksum: 10c0/923ce94a8181036787bc7fa834584ae838dd269dadb8cc96e1e1ee7bdd4d2f81d291d81cd2eae094448bd770e6567b25aef795063f6db7a5069f3460502206a4
+  checksum: 10c0/5bbb24a8637df480f23f16f591143290f7cd4b994905085bbf09ad75cb9b4e511f8f3df910f4ca6ce486d6dc089b984acfd6f9b97bcbdff162b38884cae16725
   languageName: node
   linkType: hard
 
@@ -638,11 +638,11 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ioterax/security-lib-auth@npm:<1.0.0":
-  version: 0.0.1
-  resolution: "@ioterax/security-lib-auth@npm:0.0.1"
+"@ioterax/security-lib-auth@npm:^0.0.2":
+  version: 0.0.2
+  resolution: "@ioterax/security-lib-auth@npm:0.0.2"
   peerDependencies:
-    "@ioterax/foundation-lib-commons": ^0.0.1
+    "@ioterax/foundation-lib-commons": ^0.0.2
     "@ioterax/infra-lib-profiler": ^0.0.1
     "@ioterax/observability-lib-metrics": ^0.0.1
     "@ioterax/security-lib-audit": ^0.0.1
@@ -671,7 +671,7 @@ __metadata:
       optional: false
     winston-daily-rotate-file:
       optional: false
-  checksum: 10c0/968dde1afb75e4d402975c52168811947ba303002181365ff8a07d8a48fb1b43ccd88b8318b72b4a303d01613f95c969cfb5428c29468156bedfb2fd6b21e185
+  checksum: 10c0/98fea6a0b42ca98e375431eff50e1c3c4fc69a822861f165e70acd9e9ace835b97a5c052576c2cfd36d0decfc66a6a45bd864a0d23b0c42821b4c9302fd8833e
   languageName: node
   linkType: hard
 

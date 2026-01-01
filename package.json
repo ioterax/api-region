@@ -30,7 +30,7 @@
   "dependencies": {
     "@ioterax/bootstrap-lib-starter": "<1.0.0",
     "@ioterax/foundation-lib-central": "<1.0.0",
-    "@ioterax/foundation-lib-commons": "<1.0.0",
+    "@ioterax/foundation-lib-commons": "^0.0.2",
     "@ioterax/foundation-lib-core": "<1.0.0",
     "@ioterax/infra-lib-cache": "<1.0.0",
     "@ioterax/infra-lib-connectivity": "<1.0.0",
@@ -39,7 +39,7 @@
     "@ioterax/infra-lib-profiler": "<1.0.0",
     "@ioterax/observability-lib-metrics": "<1.0.0",
     "@ioterax/security-lib-audit": "<1.0.0",
-    "@ioterax/security-lib-auth": "<1.0.0",
+    "@ioterax/security-lib-auth": "^0.0.2",
     "@ioterax/security-lib-iam": "<1.0.0",
     "@nestjs/common": "^11.1.10",
     "@nestjs/config": "^4.0.2",
