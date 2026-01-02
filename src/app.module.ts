@@ -3,9 +3,9 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { CustomExceptionFilter, DomainExceptionFilter } from '@ioterax/foundation-lib-commons';
 import { CorsMiddleware, HealthController } from '@ioterax/infra-lib-connectivity';
 import { AuthModule } from '@ioterax/security-lib-auth';
+import { CacheModule } from '@ioterax/infra-lib-cache';
 import { buildMongoConnectionUri } from '@ioterax/infra-lib-database';
 import { SiloCtxEnum } from '@ioterax/bootstrap-lib-starter';
-import { CacheModule } from '@ioterax/infra-lib-cache';
 import { CountryModule } from '@/modules/country.module';
 import { StateModule } from '@/modules/state.module';
 

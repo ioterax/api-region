@@ -3,10 +3,10 @@ import { CustomExceptionFilter, DomainExceptionFilter } from '@ioterax/foundatio
 import { AppModule } from './app.module';
 import { setupB2BSwagger } from './api/swagger/api-b2b.config';
 const banner = `
-          ▄▖    ▖▖      ▄▖▄▖▄▖▄▖▄▖▖ ▖  ▄▖▄▖▄▖▖▖▄▖▄▖▄▖
-▛▌▀▌▀▌▛▘  ▙▖▛▘▀▌▚▘  ▄▖  ▙▘▙▖▌ ▐ ▌▌▛▖▌  ▚ ▙▖▙▘▌▌▐ ▌ ▙▖
-▙▌█▌█▌▄▌▗ ▙▖▌ █▌▌▌      ▌▌▙▖▙▌▟▖▙▌▌▝▌  ▄▌▙▖▌▌▚▘▟▖▙▖▙▖
-▌`;
+          ▄▖    ▖▖      ▄▖    ▘      ▄▖      ▘    
+▛▌▀▌▛▘▛▘  ▙▖▛▘▀▌▚▘  ▄▖  ▙▘█▌▛▌▌▛▌▛▌  ▚ █▌▛▘▌▌▌▛▘█▌
+▙▌█▌▄▌▄▌▗ ▙▖▌ █▌▌▌      ▌▌▙▖▙▌▌▙▌▌▌  ▄▌▙▖▌ ▚▘▌▙▖▙▖
+▌                           ▄▌`;
 
 bootstrapMicroservice({
   appModule: AppModule,
