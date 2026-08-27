@@ -16,10 +16,10 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  repository-quality:
-    name: PnP, metadata, dependencies, and documentation
+  application-quality:
+    name: Build, quality, coverage, and E2E
     runs-on: ubuntu-24.04
-    timeout-minutes: 20
+    timeout-minutes: 35
     permissions:
       contents: read
       packages: read
@@ -43,48 +43,31 @@ jobs:
             ${{ runner.os }}-node-26.6.0-yarn-4.18.0-api-region-
             ${{ runner.os }}-node-26.6.0-yarn-4.18.0-
 
-      - name: Install immutable PnP dependencies
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GH_NPM_TOKEN || github.token }}
-        run: |
-          corepack enable
-          test "$(node --version)" = 'v26.6.0'
-          test "$(yarn --version)" = '4.18.0'
-          yarn install --immutable --mode=skip-build
-          test -f .pnp.cjs
-          test ! -d node_modules
-
-      - name: Run static quality gates in parallel
+      - name: Resolve environment channel and install PnP dependencies
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GH_NPM_TOKEN || github.token }}
         shell: bash
         run: |
-          status=0
-          yarn format:check & format_pid=$!
-          yarn check:runtime-deprecations & deprecations_pid=$!
-          yarn lint & lint_pid=$!
-          yarn typecheck & typecheck_pid=$!
-          yarn docs & docs_pid=$!
-          yarn check:dependencies & dependencies_pid=$!
-          yarn security:audit & audit_pid=$!
+          corepack enable
+          test "$(node --version)" = 'v26.6.0'
+          test "$(yarn --version)" = '4.18.0'
+          if [[ "$GITHUB_REF" == 'refs/heads/master' ]]; then
+            yarn install --immutable --mode=skip-build
+          else
+            IOTERAX_DEPENDENCY_CHANNEL=dev node scripts/docker/prepare-dependency-channel.cjs
+            yarn up -R '@ioterax/*' --mode=update-lockfile
+            yarn install --no-immutable --mode=skip-build
+          fi
+          test -f .pnp.cjs
+          test ! -d node_modules
 
-          wait "$format_pid" || status=1
-          wait "$deprecations_pid" || status=1
-          wait "$lint_pid" || status=1
-          wait "$typecheck_pid" || status=1
-          wait "$docs_pid" || status=1
-          wait "$dependencies_pid" || status=1
-          wait "$audit_pid" || status=1
-          exit "$status"
-
-  required-microservice-ci:
-    name: Build, coverage, and E2E
-    uses: ioterax/hub-platform/.github/workflows/reusable-microservice-ci.yml@4c06ccc75e5d0d699a1fd7df916a71fa6414ee57 # hub-platform master
-    permissions:
-      contents: read
-      packages: read
-    secrets:
-      GH_NPM_TOKEN: ${{ secrets.GH_NPM_TOKEN || github.token }}
+      - name: Run complete application gate
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GH_NPM_TOKEN || github.token }}
+        run: |
+          yarn quality
+          yarn security:audit
+          yarn test:e2e
 
   container-image:
     name: PnP runtime image and vulnerability scan
@@ -157,8 +140,7 @@ jobs:
     name: Required delivery gate
     if: ${{ always() }}
     needs:
-      - repository-quality
-      - required-microservice-ci
+      - application-quality
       - container-image
     runs-on: ubuntu-24.04
     timeout-minutes: 5
@@ -166,10 +148,8 @@ jobs:
     steps:
       - name: Require every parallel gate to pass
         env:
-          QUALITY_RESULT: ${{ needs.repository-quality.result }}
-          MICROSERVICE_RESULT: ${{ needs.required-microservice-ci.result }}
+          APPLICATION_RESULT: ${{ needs.application-quality.result }}
           CONTAINER_RESULT: ${{ needs.container-image.result }}
         run: |
-          test "$QUALITY_RESULT" = success
-          test "$MICROSERVICE_RESULT" = success
+          test "$APPLICATION_RESULT" = success
           test "$CONTAINER_RESULT" = success
