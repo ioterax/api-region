@@ -1,0 +1,37 @@
+diff --git a/index.js b/index.js
+index aecb72d02adcc32a77824b4f61428e2a5234124f..ee57985eab131ef3928d6d94cf563705eef89ac8 100644
+--- a/index.js
++++ b/index.js
+@@ -1,8 +1,7 @@
+ 'use strict';
+ 
+ const path = require('path');
+-const { promisify } = require('util');
+-const glob = promisify(require('glob'));
++const { glob, globSync } = require('glob');
+ const minimatch = require('minimatch');
+ const { defaults } = require('@istanbuljs/schema');
+ const isOutsideDir = require('./is-outside-dir');
+@@ -112,8 +111,7 @@ class TestExclude {
+             globOptions.ignore = this.exclude;
+         }
+ 
+-        return glob
+-            .sync(globPatterns, globOptions)
++        return globSync(globPatterns, globOptions)
+             .filter(file => this.shouldInstrument(path.resolve(cwd, file)));
+     }
+ 
+diff --git a/package.json b/package.json
+index e3185f5ca00a4a4dad1a4481354d9b7b58017b69..85bfea5fd71b8b9dc08947ba2b8116b4ede4e465 100644
+--- a/package.json
++++ b/package.json
+@@ -31,7 +31,7 @@
+   "homepage": "https://istanbul.js.org/",
+   "dependencies": {
+     "@istanbuljs/schema": "^0.1.2",
+-    "glob": "^7.1.4",
++    "glob": "^10.5.0",
+     "minimatch": "^3.0.4"
+   },
+   "devDependencies": {

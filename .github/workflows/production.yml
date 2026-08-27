@@ -1,31 +1,175 @@
-name: Node.js CIon
+name: Required microservice CI
 
-on: 
+on:
   push:
-    branches: [ master ]
+    branches:
+      - develop
+      - master
   pull_request:
-    branches: [ master ]
+    branches:
+      - develop
+      - master
+  merge_group:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.sha }}
+  cancel-in-progress: true
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [18.x]
-
-    name: 'build app'
+  repository-quality:
+    name: PnP, metadata, dependencies, and documentation
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      packages: read
     steps:
-      - name: Checkout project sources
-        uses: actions/checkout@v3
-
-      # See supported Node.js release schedule at https://nodejs.org/en/about/releases/  
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v3
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-      - run: npm i
-      - run: npm run build --if-present
-      - run: npm run lint
-      - run: npm run test:cov
-      - run: npm run test:e2e
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 26.6.0
+
+      - name: Restore shared Yarn cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: .yarn/cache
+          key: ${{ runner.os }}-node-26.6.0-yarn-4.18.0-api-region-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-26.6.0-yarn-4.18.0-api-region-
+            ${{ runner.os }}-node-26.6.0-yarn-4.18.0-
+
+      - name: Install immutable PnP dependencies
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GH_NPM_TOKEN || github.token }}
+        run: |
+          corepack enable
+          test "$(node --version)" = 'v26.6.0'
+          test "$(yarn --version)" = '4.18.0'
+          yarn install --immutable --mode=skip-build
+          test -f .pnp.cjs
+          test ! -d node_modules
+
+      - name: Run static quality gates in parallel
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GH_NPM_TOKEN || github.token }}
+        shell: bash
+        run: |
+          status=0
+          yarn format:check & format_pid=$!
+          yarn check:runtime-deprecations & deprecations_pid=$!
+          yarn lint & lint_pid=$!
+          yarn typecheck & typecheck_pid=$!
+          yarn docs & docs_pid=$!
+          yarn check:dependencies & dependencies_pid=$!
+          yarn security:audit & audit_pid=$!
+
+          wait "$format_pid" || status=1
+          wait "$deprecations_pid" || status=1
+          wait "$lint_pid" || status=1
+          wait "$typecheck_pid" || status=1
+          wait "$docs_pid" || status=1
+          wait "$dependencies_pid" || status=1
+          wait "$audit_pid" || status=1
+          exit "$status"
+
+  required-microservice-ci:
+    name: Build, coverage, and E2E
+    uses: ioterax/hub-platform/.github/workflows/reusable-microservice-ci.yml@4c06ccc75e5d0d699a1fd7df916a71fa6414ee57 # hub-platform master
+    permissions:
+      contents: read
+      packages: read
+    secrets:
+      GH_NPM_TOKEN: ${{ secrets.GH_NPM_TOKEN }}
+
+  container-image:
+    name: PnP runtime image and vulnerability scan
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      packages: read
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@bb05f3f5519dd87d3ba754cc423b652a5edd6d2c # v4.2.0
+
+      - name: Build environment-specific image with shared BuildKit cache
+        uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a # v7.3.0
+        with:
+          context: .
+          file: Dockerfile
+          load: true
+          push: false
+          tags: ioterax/api-region:${{ github.ref == 'refs/heads/master' && 'latest' || 'dev' }}
+          build-args: |
+            IOTERAX_DEPENDENCY_CHANNEL=${{ github.ref == 'refs/heads/master' && 'stable' || 'dev' }}
+          cache-from: type=gha,scope=api-region-production
+          cache-to: type=gha,mode=max,scope=api-region-production
+          secrets: |
+            ioterax_npm_token=${{ secrets.GH_NPM_TOKEN || github.token }}
+
+      - name: Verify exact non-root PnP runtime
+        run: >-
+          docker run --rm --entrypoint=/usr/local/bin/node
+          ioterax/api-region:${{ github.ref == 'refs/heads/master' && 'latest' || 'dev' }}
+          -e "const fs=require('node:fs');
+          const entries=fs.readdirSync('/app',{recursive:true,withFileTypes:true});
+          const invalid=process.version!=='v26.6.0'||process.getuid()!==65532||
+          entries.some(entry=>entry.isDirectory()&&entry.name==='node_modules')||
+          fs.existsSync('/app/.yarn/unplugged');
+          if(invalid)process.exit(1)"
+
+      - name: Report all image vulnerabilities
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
+        with:
+          version: v0.74.0
+          image-ref: ioterax/api-region:${{ github.ref == 'refs/heads/master' && 'latest' || 'dev' }}
+          format: table
+          vuln-type: os,library
+          severity: UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL
+          ignore-unfixed: false
+          exit-code: '0'
+
+      - name: Reject high and critical image vulnerabilities
+        run: >-
+          trivy image --exit-code 1 --ignore-unfixed=false
+          --ignorefile .trivyignore.yaml --show-suppressed
+          --pkg-types os,library --severity CRITICAL,HIGH
+          ioterax/api-region:${{ github.ref == 'refs/heads/master' && 'latest' || 'dev' }}
+
+      - name: Reject fixable medium image vulnerabilities
+        run: >-
+          trivy image --exit-code 1 --ignore-unfixed=true
+          --ignorefile .trivyignore.yaml --show-suppressed
+          --pkg-types os,library --severity MEDIUM
+          ioterax/api-region:${{ github.ref == 'refs/heads/master' && 'latest' || 'dev' }}
+
+  required-gate:
+    name: Required delivery gate
+    if: ${{ always() }}
+    needs:
+      - repository-quality
+      - required-microservice-ci
+      - container-image
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions: {}
+    steps:
+      - name: Require every parallel gate to pass
+        env:
+          QUALITY_RESULT: ${{ needs.repository-quality.result }}
+          MICROSERVICE_RESULT: ${{ needs.required-microservice-ci.result }}
+          CONTAINER_RESULT: ${{ needs.container-image.result }}
+        run: |
+          test "$QUALITY_RESULT" = success
+          test "$MICROSERVICE_RESULT" = success
+          test "$CONTAINER_RESULT" = success

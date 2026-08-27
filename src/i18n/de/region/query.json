@@ -1,0 +1,7 @@
+{
+  "not_found": "Der angeforderte Regionseintrag wurde nicht gefunden.",
+  "catalog_unavailable": "Der aktive Regionskatalog ist nicht verfügbar.",
+  "data_invalid": "Der aktive Regionsdatensatz enthält einen ungültigen Eintrag.",
+  "persistence_unavailable": "Der Regionenspeicher ist vorübergehend nicht verfügbar.",
+  "metrics_access_denied": "Die Metrik-Anmeldeinformation fehlt oder ist ungültig."
+}

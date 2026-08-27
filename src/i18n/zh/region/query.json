@@ -1,0 +1,7 @@
+{
+  "not_found": "未找到请求的区域记录。",
+  "catalog_unavailable": "活动区域目录不可用。",
+  "data_invalid": "活动区域数据集包含无效记录。",
+  "persistence_unavailable": "区域数据存储暂时不可用。",
+  "metrics_access_denied": "指标凭据缺失或无效。"
+}

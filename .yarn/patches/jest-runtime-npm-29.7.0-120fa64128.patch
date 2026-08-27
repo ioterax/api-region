@@ -1,0 +1,26 @@
+diff --git a/build/helpers.js b/build/helpers.js
+index 1048868f809169c51691cb107f90fb1d0d840b52..dc8f391620a9462c7b349b435cdafb12beb5fcd5 100644
+--- a/build/helpers.js
++++ b/build/helpers.js
+@@ -107,7 +107,7 @@ const findSiblingsWithFileExtension = (
+     try {
+       const slashedDirname = (0, _slash().default)(dirname);
+       const matches = _glob()
+-        .default.sync(`${pathToModule}.*`)
++        .sync(`${pathToModule}.*`)
+         .map(match => (0, _slash().default)(match))
+         .map(match => {
+           const relativePath = path().posix.relative(slashedDirname, match);
+diff --git a/package.json b/package.json
+index 096ae19a7255c1efd2fc86ee378aebb0a1eb..180db6547f5733bf738fdfc22ea7443c49e50799 100644
+--- a/package.json
++++ b/package.json
+@@ -28,7 +28,7 @@
+     "chalk": "^4.0.0",
+     "cjs-module-lexer": "^1.0.0",
+     "collect-v8-coverage": "^1.0.0",
+-    "glob": "^7.1.3",
++    "glob": "^13.0.6",
+     "graceful-fs": "^4.2.9",
+     "jest-haste-map": "^29.7.0",
+     "jest-message-util": "^29.7.0",
