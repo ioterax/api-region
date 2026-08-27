@@ -1,0 +1,7 @@
+{
+  "not_found": "L’enregistrement régional demandé est introuvable.",
+  "catalog_unavailable": "Le catalogue régional actif est indisponible.",
+  "data_invalid": "Le jeu de données régional actif contient un enregistrement invalide.",
+  "persistence_unavailable": "Le stockage régional est temporairement indisponible.",
+  "metrics_access_denied": "L’identifiant de métriques est absent ou invalide."
+}

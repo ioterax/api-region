@@ -1,0 +1,26 @@
+diff --git a/build/CoverageReporter.js b/build/CoverageReporter.js
+index 48ba4feb38349cb1a5671635ebf5841bbf5c31fa..1c1f6fbc9908393bd06da172c9386c8cf0bae158 100644
+--- a/build/CoverageReporter.js
++++ b/build/CoverageReporter.js
+@@ -372,7 +372,7 @@ class CoverageReporter extends _BaseReporter.default {
+               // of execution time.
+               if (filesByGlob[absoluteThresholdGroup] === undefined) {
+                 filesByGlob[absoluteThresholdGroup] = _glob()
+-                  .default.sync(absoluteThresholdGroup)
++                  .sync(absoluteThresholdGroup)
+                   .map(filePath => path().resolve(filePath));
+               }
+               if (filesByGlob[absoluteThresholdGroup].indexOf(file) > -1) {
+diff --git a/package.json b/package.json
+index d1f63b82f9ca6a1993525a7af497f697adc51ca7..dfd45ad459ffdac14cf93b783d08ed1c75498429 100644
+--- a/package.json
++++ b/package.json
+@@ -22,7 +22,7 @@
+     "chalk": "^4.0.0",
+     "collect-v8-coverage": "^1.0.0",
+     "exit": "^0.1.2",
+-    "glob": "^7.1.3",
++    "glob": "^13.0.6",
+     "graceful-fs": "^4.2.9",
+     "istanbul-lib-coverage": "^3.0.0",
+     "istanbul-lib-instrument": "^6.0.0",

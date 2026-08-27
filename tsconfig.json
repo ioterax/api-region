@@ -1,43 +1,23 @@
 {
   "compilerOptions": {
+    "module": "CommonJS",
+    "target": "ES2023",
+    "lib": ["ES2023"],
     "outDir": "./dist",
-    "baseUrl": "./src",
-    "paths": {
-      "@/*": [
-        "*"
-      ],
-      "@Helper/*": [
-        "src/common/helper/*"
-      ]
-    },
-    "alwaysStrict": true,
-    "strict": true,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitAny": false,
-    "strictBindCallApply": true,
-    "strictNullChecks": true,
+    "rootDir": "./src",
+    "baseUrl": ".",
+    "paths": { "@/*": ["src/*"] },
     "declaration": true,
     "declarationMap": true,
-    "removeComments": true,
     "sourceMap": true,
-    "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true,
+    "removeComments": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "target": "ES2020",
-    "incremental": true,
-    "skipLibCheck": true,
-    "listEmittedFiles": true,
-    "esModuleInterop": true,
-    // 🔧 ESSENCIAIS PARA COMMONJS
-    "module": "CommonJS"
-    // "moduleResolution": "node"
+    "forceConsistentCasingInFileNames": true
   },
-  "include": [
-    "src/**/*.ts",
-  ],
-  "exclude": [
-    "node_modules",
-    "./**/*.spec.ts"
-  ]
+  "include": ["src/**/*.ts"],
+  "exclude": ["dist", "node_modules", "test"]
 }

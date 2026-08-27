@@ -1,0 +1,25 @@
+name: Deploy api-region to Cloud Run
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+  packages: read
+
+jobs:
+  deploy:
+    name: Production delivery
+    uses: ioterax/hub-platform/.github/workflows/reusable-microservice-cloud-run-deploy.yml@c6148575457cb8130ea64765c41f432e3bb69ddf # sidecar-safe release workflow
+    with:
+      gcp_project_id: ioterax-prd
+      gcp_region: europe-west1
+      artifact_registry_repository: ioterax-images
+      image_name: api-region
+      cloud_run_service: api-region
+      expected_ingress: internal
+    secrets:
+      GH_NPM_TOKEN: ${{ secrets.GH_NPM_TOKEN }}
+      GCP_WORKLOAD_IDENTITY_PROVIDER: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+      GCP_DEPLOYER_SERVICE_ACCOUNT: ${{ secrets.GCP_DEPLOYER_SERVICE_ACCOUNT }}

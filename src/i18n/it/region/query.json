@@ -1,0 +1,7 @@
+{
+  "not_found": "Il record regionale richiesto non è stato trovato.",
+  "catalog_unavailable": "Il catalogo regionale attivo non è disponibile.",
+  "data_invalid": "Il set di dati regionale attivo contiene un record non valido.",
+  "persistence_unavailable": "L’archivio regionale è temporaneamente non disponibile.",
+  "metrics_access_denied": "La credenziale delle metriche è mancante o non valida."
+}

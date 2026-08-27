@@ -1,0 +1,7 @@
+{
+  "not_found": "No se encontró el registro regional solicitado.",
+  "catalog_unavailable": "El catálogo regional activo no está disponible.",
+  "data_invalid": "El conjunto de datos regional activo contiene un registro inválido.",
+  "persistence_unavailable": "El almacén regional no está disponible temporalmente.",
+  "metrics_access_denied": "La credencial de métricas falta o no es válida."
+}

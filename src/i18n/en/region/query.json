@@ -1,0 +1,7 @@
+{
+  "not_found": "The requested region record was not found.",
+  "catalog_unavailable": "The active region catalog is unavailable.",
+  "data_invalid": "The active region dataset contains an invalid record.",
+  "persistence_unavailable": "The region datastore is temporarily unavailable.",
+  "metrics_access_denied": "The metrics credential is missing or invalid."
+}
