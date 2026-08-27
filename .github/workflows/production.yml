@@ -84,7 +84,7 @@ jobs:
       contents: read
       packages: read
     secrets:
-      GH_NPM_TOKEN: ${{ secrets.GH_NPM_TOKEN }}
+      GH_NPM_TOKEN: ${{ secrets.GH_NPM_TOKEN || github.token }}
 
   container-image:
     name: PnP runtime image and vulnerability scan
